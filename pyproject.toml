@@ -1,0 +1,63 @@
+[project]
+name = "agentkit"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Rohit Narayanan", email = "rohit.nn@gmail.com" },
+]
+requires-python = ">=3.14"
+dependencies = [
+    "rn-forge-commons>=0.8.1,<0.9",
+    "rn-forge-cli>=0.1.2,<0.2",
+    "rn-forge-tooling>=0.3.1,<0.4",
+]
+readme = "README.md"
+
+[project.scripts]
+agentkit = "rn_forge.agentkit.main:app"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.pyright]
+reportMissingTypeStubs = false
+typeCheckingMode = "strict"
+venv = ".venv"
+venvPath = "."
+
+[tool.pytest.ini_options]
+addopts = "-ra --import-mode=importlib"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN", "D", "PLR2004", "S101"]
+
+[tool.uv]
+no-sources = true
+
+[tool.uv.build-backend]
+module-name = "rn_forge.agentkit"
+source-exclude = ["**/.DS_Store"]
+
+[dependency-groups]
+dev = [
+    "actionlint-py>=1.7",
+    "google-yamlfmt>=0.21.0",
+    "import-linter>=2.15",
+    "pip-audit>=2.10",
+    "pip-licenses>=5",
+    "pyright>=1.1",
+    "pytest>=9.1",
+    "pytest-cov>=7.1",
+    "ruff>=0.16",
+    "taplo>=0.9",
+    "zizmor>=1.31",
+]
+docs = [
+    "mdformat>=1.0.0",
+    "mdformat-front-matters>=2.0.0",
+    "mdformat-gfm>=0.4",
+    "mdformat-mkdocs>=5.3.0",
+    "mkdocs-material>=9.6",
+    "mkdocstrings[python]>=0.30",
+]
