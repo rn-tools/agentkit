@@ -76,6 +76,27 @@ nav:
   - Specs:
       - specs/index.md
       - Epics: specs/epics/index.md
+      - E1–E10:
+          - E1 — Apply engine:
+              - specs/epics/E1-apply-engine/index.md
+              - F1.1 — Sources and layers: specs/epics/E1-apply-engine/F1.1-sources-and-layers.md
+              - F1.2 — Owned key paths in shared settings files: specs/epics/E1-apply-engine/F1.2-owned-key-paths.md
+              - F1.3 — Commands: specs/epics/E1-apply-engine/F1.3-commands.md
+              - F1.4 — Agent adapters: specs/epics/E1-apply-engine/F1.4-agent-adapters.md
+          - E2 — Instruction files:
+              - specs/epics/E2-instruction-files/index.md
+              - F2.1 — Machine instruction blocks: specs/epics/E2-instruction-files/F2.1-machine-instruction-blocks.md
+              - F2.2 — Repository block and CLAUDE.md seed: specs/epics/E2-instruction-files/F2.2-repository-block.md
+              - F2.3 — Instruction doctor checks: specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md
+          - E3 — Asset pack:
+              - specs/epics/E3-asset-pack/index.md
+              - F3.1 — Guard hooks: specs/epics/E3-asset-pack/F3.1-guard-hooks.md
+              - F3.2 — Skills for both agents: specs/epics/E3-asset-pack/F3.2-skills.md
+          - E4 — Lifecycle and cutover:
+              - specs/epics/E4-lifecycle-and-cutover/index.md
+              - F4.1 — Product and install: specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md
+              - F4.2 — Machine cutover: specs/epics/E4-lifecycle-and-cutover/F4.2-machine-cutover.md
+              - F4.3 — Repository rollout: specs/epics/E4-lifecycle-and-cutover/F4.3-repository-rollout.md
       - Ideas:
           - specs/ideas/index.md
   - Decisions: adr/index.md
