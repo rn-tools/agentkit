@@ -32,7 +32,8 @@ The developer surface for this repo is exactly:
 | `task format` | Format Python code, TOML, YAML and Markdown prose in place. |
 | `task kiln:apply` | Re-render the generated files from .rn-forge/kiln/config.toml. Pass --dry-run, or --force \<path> to overwrite a drifted file, after `--`. |
 | `task kiln:diff` | Show every generated file that differs from a fresh render, writing nothing. Pass --artifact \<key or path> after `--` to limit it to one. |
-| `task kiln:pin` | Move kiln to another ref (tag, branch or SHA) and re-render with it. Pass the ref after `--`. |
+| `task kiln:pin` | Pin kiln to a branch's newest commit, a tag or a SHA and re-render with it. Pass it after `--`; with none, follow `track`. |
+| `task kiln:upgrade` | Pin kiln to a ref after `--` (or follow `track`), apply the new kiln's standard, move the rn-forge ranges to its pin table and run `task validate`. A failure restores the previous pin, files and locks unless FORCE=1. |
 | `task lint` | Every lint — Python, imports, Markdown, TOML and YAML formatting, kiln's checks (generated files, task layout, CI, dependencies, docs), workflow security, dependency vulnerabilities, dependency licences. |
 | `task setup` | Install the project and its dev + docs dependency groups. |
 | `task sonar:local` | Run the coverage tests and scan the checked-out branch on SonarCloud, awaiting the quality gate. Needs SONAR_TOKEN and sonar-scanner on PATH; pass --dry-run after -- to print the commands. |
@@ -151,9 +152,9 @@ release:
 
 ```toml
 dependencies = [
-  "rn-forge-commons>=0.8.1,<0.9",
-  "rn-forge-cli>=0.1.2,<0.2",
-  "rn-forge-tooling>=0.3.1,<0.4",
+  "rn-forge-commons>=0.10.0,<0.11",
+  "rn-forge-cli>=0.2.0,<0.3",
+  "rn-forge-tooling>=0.3.3,<0.4",
 ]
 ```
 
@@ -177,6 +178,15 @@ To move the pin to another ref (a tag, a branch or a SHA, higher or lower), run
 `task kiln:pin -- <ref>`. It checks that the ref resolves, sets `[kiln] ref`,
 and re-renders with the kiln at that ref, so the move is one reviewable diff. Do
 not edit the ref by hand: `task kiln:apply` would then run the old kiln.
+
+A new kiln can raise the rn-forge floors, which `task kiln:pin` does not take,
+because `pyproject.toml` is this repository's own. Run
+`task kiln:upgrade -- <ref>` instead. The kiln at that ref pins itself, applies
+its standard, rewrites every rn-forge range to its pin table, prints the release
+notes in between, and runs `task setup` and `task validate`. It needs a clean
+working tree. A failure restores the previous pin, files and locks;
+`task kiln:upgrade FORCE=1 -- <ref>` keeps an applied upgrade so you can fix
+what `task validate` reports.
 
 ## 4. The import boundary
 
@@ -266,7 +276,7 @@ model.
 | Docs strict build | `task docs:build` | D: `[docs] profile = "mkdocs"` |
 | `dependency-review` | action | S |
 | Sonar | `sonar` job | C: `[ci] sonar`, default `true` |
-| Release | `release` job | C: `[ci] release`, default `tag-exists`; `pypi` for `python-lib`; `nx-dispatch` for `node-lib`; `none` |
+| Release | `release` job | C: `[ci] release`, default `tag-exists`; `pypi` for `python-lib`; `nx-dispatch` or `npm` for `node-lib`; `none` |
 | `verify-release` | `task ci:verify-release` | D: a release mode other than `none` |
 | Docs deploy | `docs` job | D: `[docs] profile = "mkdocs"` |
 | `ci-ok` | none | S |

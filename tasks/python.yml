@@ -5,9 +5,6 @@ version: "3"
 # compose. Everything here is `internal: true` — it exists to be called from a
 # wrapper, not run directly.
 
-vars:
-  DEVOPS: 'uvx --from "rn-forge-kiln @ git+https://github.com/rn-forge/kiln@feature/v1" kiln-devops'
-
 tasks:
   install:
     desc: Sync the virtualenv with the dev and docs dependency groups.
