@@ -55,9 +55,10 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-F1.1 and F4.1 closed 2026-11-19. S1.2.1 chose a `keys` artifact kind in
-rn-forge-commons. S1.2.2 waits for a commons release with that kind on PyPI, and
-F1.3, F1.4 and most of E2 and E3 wait on S1.2.2.
+F1.1, F1.3 and F4.1 are closed. S1.2.1 chose a `keys` artifact kind in
+rn-forge-commons, which ships as commons 0.10.1. S1.2.2 waits for that release
+on PyPI, and so do F1.4 (the settings artifacts) and the E2 and E3 work that
+names F1.4.
 
 ## Commits
 
