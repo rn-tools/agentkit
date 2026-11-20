@@ -1,6 +1,14 @@
+from importlib.metadata import version
+
 from rn_forge.cli import ExitCode, run
 
-from rn_forge.agentkit.main import app
+from rn_forge.agentkit.main import app, main
+
+
+def test_version_flag_prints_the_package_version(monkeypatch, capsys):
+    monkeypatch.setattr("sys.argv", ["agentkit", "--version"])
+    assert main() == ExitCode.OK
+    assert capsys.readouterr().out == f"{version('agentkit')}\n"
 
 
 def test_the_declared_app_exposes_the_declared_command(capsys):

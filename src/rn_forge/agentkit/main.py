@@ -1,17 +1,28 @@
 """The console-script entry point.
 
-The command line is declared in `.rn-forge/kiln/config.toml` under `[cli]`
-and `[lifecycle]` and built by `build_tool_app`. `[project.scripts]`
-points at `app` itself; there is no `main()`. `CliApp.__call__` returns the
-mapped exit code.
+Kiln renders the `[cli]` and `[lifecycle]` tables into the packaged
+`cli.toml`. The entry point handles `--version` and delegates commands to
+the app built from that declaration.
 """
 
 from __future__ import annotations
 
-from pathlib import Path
+import sys
+from importlib.resources import files
 
+from rn_forge.commons import console
+from rn_forge.commons.fs.documents import DocumentUtils
 from rn_forge.tooling.cli.lifecycle import build_tool_app
 
-CONFIG = Path(__file__).resolve().parents[3] / ".rn-forge" / "kiln" / "config.toml"
+from rn_forge.agentkit.product import PRODUCT
 
-app = build_tool_app(CONFIG)
+DECLARATION = files("rn_forge.agentkit").joinpath("cli.toml")
+app = build_tool_app(DocumentUtils.read(DECLARATION))
+
+
+def main() -> int:
+    """Print the package version or run the declared CLI."""
+    if sys.argv[1:] == ["--version"]:
+        console.print(PRODUCT.version)
+        return 0
+    return app()
