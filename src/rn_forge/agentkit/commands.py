@@ -8,10 +8,11 @@ error-to-exit-code mapping — is built from the `[cli]` table in
 
 from __future__ import annotations
 
+import shutil
 from collections.abc import Sequence
 from pathlib import Path
 
-from rn_forge.cli import DryRunOption
+from rn_forge.cli import DryRunOption, YesOption
 from rn_forge.commons.exceptions import AppException
 from rn_forge.commons.findings import Severity
 from rn_forge.commons.generation import Change
@@ -105,3 +106,28 @@ def plan(
     errors = sum(f.severity is Severity.ERROR for f in findings)
     if errors:
         raise AppException("{} error finding(s)", errors)
+
+
+def remove(
+    scope: Scope = Scope.MACHINE,
+    repo: Path | None = None,
+    yes: YesOption = False,
+) -> None:
+    """Take back everything agentkit recorded in the scope."""
+    target = _target(scope, repo)
+    result, left = operations.run_remove(target)
+    if console.mode is OutputMode.JSON:
+        console.emit({"changes": _rows(result.changes), "left": [c.path for c in left]})
+    else:
+        for change in result.changes:
+            console.print("{} {}", change.action, change.path, markup=False)
+        for change in left:
+            console.print("left in place (drift): {}", change.path, markup=False)
+    if scope is Scope.MACHINE and (
+        yes
+        or console.confirm(
+            f"Delete {target.work_dir}, including its backups and your overlay?",
+            default=False,
+        )
+    ):
+        shutil.rmtree(target.work_dir)

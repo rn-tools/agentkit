@@ -15,5 +15,9 @@ target = "rn_forge.agentkit.commands:diff"
 name = "plan"
 target = "rn_forge.agentkit.commands:plan"
 
+[[cli.commands]]
+name = "remove"
+target = "rn_forge.agentkit.commands:remove"
+
 [lifecycle]
 product = "rn_forge.agentkit.product:PRODUCT"

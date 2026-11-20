@@ -303,7 +303,7 @@
     },
     "src/rn_forge/agentkit/cli.toml": {
       "begin_marker": null,
-      "content_hash": "509b85d2bfc9a280708f3eebed023ba41628acf34bbe96f7419bd49ea0bacaaa",
+      "content_hash": "880e96443ee8462ff99251245834f361c5685d0d5ab907e824938bd5cc6b3c96",
       "end_marker": null,
       "kind": "managed",
       "path": "src/rn_forge/agentkit/cli.toml"
@@ -359,7 +359,7 @@
     }
   },
   "metadata": {
-    "config_hash": "ff09322d9c91594411f876209fc450a410f2dfa84ce8814ed85f7b6e895cbc7f",
+    "config_hash": "c958a2c4f9e43ffdd0da1b734974bbe405311dd871f675f5ad3027f3bb3fdfb1",
     "config_provenance": {
       "archetype.python-tool.module": {
         "layer": "flags",
@@ -411,6 +411,10 @@
           {
             "name": "plan",
             "target": "rn_forge.agentkit.commands:plan"
+          },
+          {
+            "name": "remove",
+            "target": "rn_forge.agentkit.commands:remove"
           }
         ]
       },

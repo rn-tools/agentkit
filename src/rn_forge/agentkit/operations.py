@@ -8,6 +8,7 @@ from rn_forge.commons.fs.state import StateStore
 from rn_forge.commons.generation import (
     WRITE_ACTIONS,
     ApplyResult,
+    Change,
     Plan,
     StateEntry,
     apply,
@@ -56,6 +57,23 @@ def run_apply(
         entries=entries,
         dry_run=dry_run,
     )
+
+
+def run_remove(target: Target) -> tuple[ApplyResult, list[Change]]:
+    """Take back everything recorded; hand-edited paths are left and returned."""
+    entries = _store(target).load()
+    planned = plan(target.root, [], entries)
+    left = [change for change in planned.changes if change.is_blocking]
+    rest = Plan(tuple(change for change in planned.changes if not change.is_blocking))
+    result = apply(
+        target.root,
+        rest,
+        _store(target),
+        staging_dir=target.staging_dir,
+        backup_dir=target.backup_dir,
+        entries=entries,
+    )
+    return result, left
 
 
 def run_diff(target: Target, agents: Sequence[Agent]) -> tuple[Plan, list[str]]:
