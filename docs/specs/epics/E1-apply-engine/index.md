@@ -10,7 +10,7 @@
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
 | [F1.1 — Sources and layers](F1.1-sources-and-layers.md) | Closed | release-1 | 1 Closed |
-| [F1.2 — Owned key paths in shared settings files](F1.2-owned-key-paths.md) | Active | release-1 | 2 New |
+| [F1.2 — Owned key paths in shared settings files](F1.2-owned-key-paths.md) | Active | release-1 | 1 New · 1 Closed |
 | [F1.3 — Commands](F1.3-commands.md) | New | release-1 | 3 New |
 | [F1.4 — Agent adapters](F1.4-agent-adapters.md) | New | release-1 | 1 New |
 
