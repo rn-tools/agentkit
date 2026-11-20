@@ -31,7 +31,7 @@ dogfooding its own repository block.
 | [F2.3 — Instruction doctor checks](../../specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) | E2 | New |
 | [F3.1 — Guard hooks](../../specs/epics/E3-asset-pack/F3.1-guard-hooks.md) | E3 | New |
 | [F3.2 — Skills for both agents](../../specs/epics/E3-asset-pack/F3.2-skills.md) | E3 | New |
-| [F4.1 — Product and install](../../specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md) | E4 | Active |
+| [F4.1 — Product and install](../../specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md) | E4 | Closed |
 | [F4.2 — Machine cutover](../../specs/epics/E4-lifecycle-and-cutover/F4.2-machine-cutover.md) | E4 | New |
 | [F4.3 — Repository rollout](../../specs/epics/E4-lifecycle-and-cutover/F4.3-repository-rollout.md) | E4 | New |
 
