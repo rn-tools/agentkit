@@ -4,8 +4,12 @@ name = "agentkit"
 help = "The agentkit command line."
 
 [[cli.commands]]
-name = "hello"
-target = "rn_forge.agentkit.commands:hello"
+name = "apply"
+target = "rn_forge.agentkit.commands:apply"
+
+[[cli.commands]]
+name = "diff"
+target = "rn_forge.agentkit.commands:diff"
 
 [lifecycle]
 product = "rn_forge.agentkit.product:PRODUCT"

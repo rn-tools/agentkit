@@ -303,7 +303,7 @@
     },
     "src/rn_forge/agentkit/cli.toml": {
       "begin_marker": null,
-      "content_hash": "db1c35b61a081ca52f1803b88cfea2180fd5c9cdeef3a80cd8797f0c934d4fe2",
+      "content_hash": "f42efe7fba3c648d693657f764d9d1ac61025ecd8cb7bb7f9f97a6991dbb5e79",
       "end_marker": null,
       "kind": "managed",
       "path": "src/rn_forge/agentkit/cli.toml"
@@ -359,7 +359,7 @@
     }
   },
   "metadata": {
-    "config_hash": "36a1a14efa4a1e9bfdf864da5e8736f75ddef86038d9e389b89663d54aed4b12",
+    "config_hash": "138136d2bfd3e479d54e3731501434679835bf8ea1762792920e89f7122992b0",
     "config_provenance": {
       "archetype.python-tool.module": {
         "layer": "flags",
@@ -398,11 +398,15 @@
         "value": []
       },
       "cli.commands": {
-        "layer": "flags",
+        "layer": "repo",
         "value": [
           {
-            "name": "hello",
-            "target": "rn_forge.agentkit.commands:hello"
+            "name": "apply",
+            "target": "rn_forge.agentkit.commands:apply"
+          },
+          {
+            "name": "diff",
+            "target": "rn_forge.agentkit.commands:diff"
           }
         ]
       },
