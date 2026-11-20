@@ -8,13 +8,14 @@ come from `rn-forge-tooling`.
 from __future__ import annotations
 
 import os
-import shutil
 from collections.abc import Sequence
 from importlib.metadata import version
 from pathlib import Path
 
 from rn_forge.commons.findings import Finding, Severity
 from rn_forge.tooling.install import Check, PythonTool, ToolHome
+
+from rn_forge.agentkit.findings import check_machine
 
 
 def share_dir(home: ToolHome) -> Path:
@@ -39,25 +40,12 @@ def check_share_dir(home: ToolHome) -> list[Finding]:
     ]
 
 
-def check_jq(home: ToolHome) -> list[Finding]:
-    """Report an error when `jq` is not on `PATH`."""
-    if shutil.which("jq"):
-        return []
-    return [
-        Finding(
-            "agentkit.jq-missing",
-            Severity.ERROR,
-            "jq is not on PATH",
-        ),
-    ]
-
-
 class Tool(PythonTool):
-    """Install the AgentKit console script; check its share dir and `jq`."""
+    """Install the AgentKit console script; check its share dir and the machine scope."""
 
     def checks(self) -> Sequence[Check]:
-        """Check that the share dir is writable and `jq` is on `PATH`."""
-        return (check_share_dir, check_jq)
+        """Check the share dir and the machine scope's findings."""
+        return (check_share_dir, check_machine)
 
 
 PRODUCT = Tool(

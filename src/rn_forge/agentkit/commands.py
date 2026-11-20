@@ -12,11 +12,14 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from rn_forge.cli import DryRunOption
+from rn_forge.commons.exceptions import AppException
+from rn_forge.commons.findings import Severity
 from rn_forge.commons.generation import Change
 from rn_forge.commons.runtime.console import OutputMode, console
 from rn_forge.tooling.install import rnf_home
 
 from rn_forge.agentkit import operations
+from rn_forge.agentkit.findings import scope_findings
 from rn_forge.agentkit.sources import Scope
 from rn_forge.agentkit.targets import Agent, Target, resolve_target
 
@@ -70,3 +73,35 @@ def diff(
         return
     for text in diffs:
         console.print(text, markup=False)
+
+
+def plan(
+    scope: Scope = Scope.MACHINE,
+    repo: Path | None = None,
+    agent: list[Agent] | None = None,
+) -> None:
+    """Show the per-artifact plan and the scope's findings."""
+    target = _target(scope, repo)
+    agents = _agents(agent)
+    findings = scope_findings(target, agents)
+    rows: list[dict[str, str]] = []
+    if not any(f.code == "agentkit.overlay-invalid" for f in findings):
+        rows = _rows(operations.build_plan(target, agents)[0].changes)
+    if console.mode is OutputMode.JSON:
+        console.emit({"changes": rows, "findings": [f.as_dict() for f in findings]})
+    else:
+        for row in rows:
+            console.print(
+                "{} {} {}", row["action"], row["kind"], row["path"], markup=False
+            )
+        for finding in findings:
+            console.print(
+                "{} {} {}",
+                finding.severity,
+                finding.code,
+                finding.message,
+                markup=False,
+            )
+    errors = sum(f.severity is Severity.ERROR for f in findings)
+    if errors:
+        raise AppException("{} error finding(s)", errors)

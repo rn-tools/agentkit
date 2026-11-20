@@ -11,5 +11,9 @@ target = "rn_forge.agentkit.commands:apply"
 name = "diff"
 target = "rn_forge.agentkit.commands:diff"
 
+[[cli.commands]]
+name = "plan"
+target = "rn_forge.agentkit.commands:plan"
+
 [lifecycle]
 product = "rn_forge.agentkit.product:PRODUCT"

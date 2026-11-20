@@ -52,6 +52,10 @@ target = "rn_forge.agentkit.commands:apply"
 name = "diff"
 target = "rn_forge.agentkit.commands:diff"
 
+[[cli.commands]]
+name = "plan"
+target = "rn_forge.agentkit.commands:plan"
+
 # The lifecycle verbs mounted under the CLI, read by rn-forge-tooling's
 # `build_tool_app` and carried as written. `kiln apply` does not read it.
 [lifecycle]
