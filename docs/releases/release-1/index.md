@@ -22,7 +22,7 @@ dogfooding its own repository block.
 
 | Feature | Epic | State |
 | -- | -- | -- |
-| [F1.1 — Sources and layers](../../specs/epics/E1-apply-engine/F1.1-sources-and-layers.md) | E1 | Active |
+| [F1.1 — Sources and layers](../../specs/epics/E1-apply-engine/F1.1-sources-and-layers.md) | E1 | Closed |
 | [F1.2 — Owned key paths in shared settings files](../../specs/epics/E1-apply-engine/F1.2-owned-key-paths.md) | E1 | New |
 | [F1.3 — Commands](../../specs/epics/E1-apply-engine/F1.3-commands.md) | E1 | New |
 | [F1.4 — Agent adapters](../../specs/epics/E1-apply-engine/F1.4-agent-adapters.md) | E1 | New |
@@ -55,9 +55,9 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-F1.1 is in build. Still open: S1.2.1 (where the key-path kind lives) blocks
-S1.2.2 and the features that depend on it. The SonarCloud organisation for
-`rn-tools` must be settled before the first CI run.
+F1.1 closed 2026-11-19. Next is S1.2.1, the decision on where the key-path kind
+lives. It blocks S1.2.2, F1.3 and F1.4, and so most of E2 and E3. The SonarCloud
+organisation for `rn-tools` must be settled before the first CI run.
 
 ## Commits
 
@@ -65,7 +65,7 @@ S1.2.2 and the features that depend on it. The SonarCloud organisation for
 git log --oneline -E --grep='S[1-4]\.[0-9]+\.[0-9]+|F[1-4]\.[0-9]+'
 ```
 
-None yet.
+Refreshed at the cut.
 
 ## Exit criteria
 
