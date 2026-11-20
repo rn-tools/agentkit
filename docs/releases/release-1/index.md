@@ -55,9 +55,9 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-F1.1 closed 2026-11-19. Next is S1.2.1, the decision on where the key-path kind
-lives. It blocks S1.2.2, F1.3 and F1.4, and so most of E2 and E3. The SonarCloud
-organisation for `rn-tools` must be settled before the first CI run.
+F1.1 and F4.1 closed 2026-11-19. S1.2.1 chose a `keys` artifact kind in
+rn-forge-commons. S1.2.2 waits for a commons release with that kind on PyPI, and
+F1.3, F1.4 and most of E2 and E3 wait on S1.2.2.
 
 ## Commits
 
