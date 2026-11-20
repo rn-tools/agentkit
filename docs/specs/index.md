@@ -11,19 +11,11 @@ sections below are derived from the epic, feature and release pages by
 
 | Release | Status | Features |
 | -- | -- | -- |
+| [Release 1 — agentkit v1](../releases/release-1/index.md) | in progress | 1 Active · 11 New |
 
 ## Backlog
 
-Features with no Iteration, by State and epic.
-
-### New
-
-| Epic | Features |
-| -- | -- |
-| [E1 — Apply engine](epics/E1-apply-engine/index.md) | [F1.1](epics/E1-apply-engine/F1.1-sources-and-layers.md), [F1.2](epics/E1-apply-engine/F1.2-owned-key-paths.md), [F1.3](epics/E1-apply-engine/F1.3-commands.md), [F1.4](epics/E1-apply-engine/F1.4-agent-adapters.md) |
-| [E2 — Instruction files](epics/E2-instruction-files/index.md) | [F2.1](epics/E2-instruction-files/F2.1-machine-instruction-blocks.md), [F2.2](epics/E2-instruction-files/F2.2-repository-block.md), [F2.3](epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) |
-| [E3 — Asset pack](epics/E3-asset-pack/index.md) | [F3.1](epics/E3-asset-pack/F3.1-guard-hooks.md), [F3.2](epics/E3-asset-pack/F3.2-skills.md) |
-| [E4 — Lifecycle and cutover](epics/E4-lifecycle-and-cutover/index.md) | [F4.1](epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md), [F4.2](epics/E4-lifecycle-and-cutover/F4.2-machine-cutover.md), [F4.3](epics/E4-lifecycle-and-cutover/F4.3-repository-rollout.md) |
+Every feature is on a release or Removed.
 
 <!-- END derived board -->
 

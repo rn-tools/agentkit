@@ -8,8 +8,8 @@
 
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
-| [F3.1 — Guard hooks](F3.1-guard-hooks.md) | New | — | 2 New |
-| [F3.2 — Skills for both agents](F3.2-skills.md) | New | — | 1 New |
+| [F3.1 — Guard hooks](F3.1-guard-hooks.md) | New | release-1 | 2 New |
+| [F3.2 — Skills for both agents](F3.2-skills.md) | New | release-1 | 1 New |
 
 <!-- END derived features -->
 

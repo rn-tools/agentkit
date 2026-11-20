@@ -8,9 +8,9 @@
 
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
-| [F2.1 — Machine instruction blocks](F2.1-machine-instruction-blocks.md) | New | — | 1 New |
-| [F2.2 — Repository block and CLAUDE.md seed](F2.2-repository-block.md) | New | — | 3 New |
-| [F2.3 — Instruction doctor checks](F2.3-instruction-doctor-checks.md) | New | — | 1 New |
+| [F2.1 — Machine instruction blocks](F2.1-machine-instruction-blocks.md) | New | release-1 | 1 New |
+| [F2.2 — Repository block and CLAUDE.md seed](F2.2-repository-block.md) | New | release-1 | 3 New |
+| [F2.3 — Instruction doctor checks](F2.3-instruction-doctor-checks.md) | New | release-1 | 1 New |
 
 <!-- END derived features -->
 

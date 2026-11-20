@@ -8,9 +8,9 @@
 
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
-| [F4.1 — Product and install](F4.1-product-and-install.md) | New | — | 1 New |
-| [F4.2 — Machine cutover](F4.2-machine-cutover.md) | New | — | 2 New |
-| [F4.3 — Repository rollout](F4.3-repository-rollout.md) | New | — | 1 New |
+| [F4.1 — Product and install](F4.1-product-and-install.md) | New | release-1 | 1 New |
+| [F4.2 — Machine cutover](F4.2-machine-cutover.md) | New | release-1 | 2 New |
+| [F4.3 — Repository rollout](F4.3-repository-rollout.md) | New | release-1 | 1 New |
 
 <!-- END derived features -->
 

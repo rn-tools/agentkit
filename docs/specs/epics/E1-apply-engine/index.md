@@ -2,16 +2,17 @@
 
 |  |  |
 | -- | -- |
-| **State** | New |
+| **State** | Active |
+| **Start Date** | 2026-11-19 |
 
 <!-- BEGIN derived features -->
 
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
-| [F1.1 — Sources and layers](F1.1-sources-and-layers.md) | New | — | 1 New |
-| [F1.2 — Owned key paths in shared settings files](F1.2-owned-key-paths.md) | New | — | 2 New |
-| [F1.3 — Commands](F1.3-commands.md) | New | — | 3 New |
-| [F1.4 — Agent adapters](F1.4-agent-adapters.md) | New | — | 1 New |
+| [F1.1 — Sources and layers](F1.1-sources-and-layers.md) | Active | release-1 | 1 New |
+| [F1.2 — Owned key paths in shared settings files](F1.2-owned-key-paths.md) | New | release-1 | 2 New |
+| [F1.3 — Commands](F1.3-commands.md) | New | release-1 | 3 New |
+| [F1.4 — Agent adapters](F1.4-agent-adapters.md) | New | release-1 | 1 New |
 
 <!-- END derived features -->
 

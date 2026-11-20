@@ -12,9 +12,9 @@ Jump to: [E1–E10](#e1e10)
 
 | Epic | State | Features | Iterations |
 | -- | -- | -- | -- |
-| [E1 — Apply engine](E1-apply-engine/index.md) | New | 4 New | — |
-| [E2 — Instruction files](E2-instruction-files/index.md) | New | 3 New | — |
-| [E3 — Asset pack](E3-asset-pack/index.md) | New | 2 New | — |
-| [E4 — Lifecycle and cutover](E4-lifecycle-and-cutover/index.md) | New | 3 New | — |
+| [E1 — Apply engine](E1-apply-engine/index.md) | Active | 1 Active · 3 New | release-1 |
+| [E2 — Instruction files](E2-instruction-files/index.md) | New | 3 New | release-1 |
+| [E3 — Asset pack](E3-asset-pack/index.md) | New | 2 New | release-1 |
+| [E4 — Lifecycle and cutover](E4-lifecycle-and-cutover/index.md) | New | 3 New | release-1 |
 
 <!-- END derived epics -->
