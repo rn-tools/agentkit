@@ -121,7 +121,7 @@
     },
     "Taskfile.yml": {
       "begin_marker": null,
-      "content_hash": "bc580743fecf8d7f917a33706d882ba7fd79df79577a15a4ef12a0afbb942689",
+      "content_hash": "ede49b91f6556d1c46c467b8a08f3e027e8a1979468779046e640d49ce331234",
       "end_marker": null,
       "kind": "managed",
       "path": "Taskfile.yml"
@@ -296,7 +296,7 @@
     },
     "sonar-project.properties": {
       "begin_marker": null,
-      "content_hash": "73d37c7608574bb7a6e4349e4a860267976e76a96abf5813bb1e4a23887a4e53",
+      "content_hash": "8c32f9cd821ab521603076e97ea1fce11817be0f90366d5c853bc3d7d5cfee46",
       "end_marker": null,
       "kind": "managed",
       "path": "sonar-project.properties"
@@ -307,27 +307,6 @@
       "end_marker": null,
       "kind": "managed",
       "path": "src/rn_forge/agentkit/cli.toml"
-    },
-    "src/rn_forge/agentkit/commands.py": {
-      "begin_marker": null,
-      "content_hash": null,
-      "end_marker": null,
-      "kind": "seeded",
-      "path": "src/rn_forge/agentkit/commands.py"
-    },
-    "src/rn_forge/agentkit/main.py": {
-      "begin_marker": null,
-      "content_hash": null,
-      "end_marker": null,
-      "kind": "seeded",
-      "path": "src/rn_forge/agentkit/main.py"
-    },
-    "src/rn_forge/agentkit/product.py": {
-      "begin_marker": null,
-      "content_hash": null,
-      "end_marker": null,
-      "kind": "seeded",
-      "path": "src/rn_forge/agentkit/product.py"
     },
     "tasks/ci.yml": {
       "begin_marker": null,
@@ -377,24 +356,10 @@
       "end_marker": null,
       "kind": "managed",
       "path": "tasks/workspace.yml"
-    },
-    "tests/test_cli.py": {
-      "begin_marker": null,
-      "content_hash": null,
-      "end_marker": null,
-      "kind": "seeded",
-      "path": "tests/test_cli.py"
-    },
-    "tests/test_product.py": {
-      "begin_marker": null,
-      "content_hash": null,
-      "end_marker": null,
-      "kind": "seeded",
-      "path": "tests/test_product.py"
     }
   },
   "metadata": {
-    "config_hash": "6daf30c2cba230248af3a068a9e25b2fdd6c02ebecb1bb40309b38bce3faad15",
+    "config_hash": "36a1a14efa4a1e9bfdf864da5e8736f75ddef86038d9e389b89663d54aed4b12",
     "config_provenance": {
       "archetype.python-tool.module": {
         "layer": "flags",
@@ -462,8 +427,8 @@
         "value": ".docs-site"
       },
       "kiln.ref": {
-        "layer": "flags",
-        "value": "feature/v1"
+        "layer": "repo",
+        "value": "1c30ca8248b1ef7dd4b9fa361b94ddd59861942b"
       },
       "lifecycle.product": {
         "layer": "flags",
@@ -482,8 +447,8 @@
         "value": "agentkit"
       },
       "repository.owner": {
-        "layer": "flags",
-        "value": "rn-forge"
+        "layer": "repo",
+        "value": "rn-tools"
       },
       "schema_version": {
         "layer": "defaults",
