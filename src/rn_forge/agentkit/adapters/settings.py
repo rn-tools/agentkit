@@ -10,10 +10,12 @@ CLAUDE: tuple[ArtifactSpec, ...] = (
     ArtifactSpec(
         ".claude/settings.json",
         ArtifactKind.KEYS,
-        "",
+        source="hooks/claude/settings-hooks.json.j2",
+        template=True,
         keys=(
             "effortLevel",
             "extraKnownMarketplaces",
+            "hooks",
             "outputStyle",
             "permissions.deny",
         ),

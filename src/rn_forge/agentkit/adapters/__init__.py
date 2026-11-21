@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Iterable, Mapping, Sequence
 from importlib.resources import files
 from pathlib import Path
@@ -57,26 +58,32 @@ def _destination(target: Target, spec: ArtifactSpec) -> str:
     return (target.work_dir.relative_to(target.root) / spec.path).as_posix()
 
 
+def _render_source(spec: ArtifactSpec, context: Mapping[str, object]) -> str:
+    if spec.template:
+        return TemplateEngine.cached(directory=str(ASSETS)).render(spec.source, context)
+    return (ASSETS / spec.source).read_text(encoding="utf-8")
+
+
 def _emit(
     target: Target, spec: ArtifactSpec, context: Mapping[str, object]
 ) -> Artifact | None:
     if spec.kind is ArtifactKind.KEYS:
         config = cast("Mapping[str, object]", context["config"])
-        values = {
-            path: value
-            for path in spec.keys
-            if (value := DictUtils.get(config, path, default=_ABSENT)) is not _ABSENT
-        }
+        document: Mapping[str, object] = (
+            json.loads(_render_source(spec, context)) if spec.source else {}
+        )
+        values: dict[str, object] = {}
+        for path in spec.keys:
+            value = DictUtils.get(document, path, default=_ABSENT)
+            if value is _ABSENT:
+                value = DictUtils.get(config, path, default=_ABSENT)
+            if value is not _ABSENT:
+                values[path] = value
         if not values:
             return None
         return Artifact(_destination(target, spec), ArtifactKind.KEYS, "", keys=values)
 
-    if spec.template:
-        content = TemplateEngine.cached(directory=str(ASSETS)).render(
-            spec.source, context
-        )
-    else:
-        content = (ASSETS / spec.source).read_text(encoding="utf-8")
+    content = _render_source(spec, context)
     return Artifact(_destination(target, spec), spec.kind, content, block=spec.block)
 
 
@@ -92,6 +99,7 @@ def render(
     for agent in agents:
         context: dict[str, object] = {
             "agent": agent.value,
+            "share": hooks.share_prefix(),
             "scope": target.scope.value,
             "config": sources.config.get(agent.value, {}),
         }
@@ -115,6 +123,7 @@ def render(
     if agents:
         common: dict[str, object] = {
             "agent": "_common",
+            "share": hooks.share_prefix(),
             "scope": target.scope.value,
             "config": {},
         }

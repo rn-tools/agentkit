@@ -29,7 +29,8 @@ class ArtifactSpec:
         path: POSIX path relative to the scope root, or, for ``Base.SHARE``, to
             the target's work dir.
         kind: How the artifact is written.
-        source: Packaged asset path, relative to the assets directory.
+        source: Packaged asset path, relative to the assets directory. For
+            ``ArtifactKind.KEYS``, an optional JSON document providing owned values.
         template: Render *source* through the template engine instead of
             copying it verbatim.
         block: The managed block, for ``ArtifactKind.BLOCK`` only.
@@ -38,7 +39,8 @@ class ArtifactSpec:
             ``skills.disabled`` can then turn it off.
         base: What *path* is relative to.
         keys: Dotted key paths the artifact owns, for ``ArtifactKind.KEYS``
-            only; values come from the agent's merged config.
+            only. Values come from the rendered source document when present at
+            that path, otherwise from the agent's merged config.
 
     Raises:
         ValueError: *path* is empty or leaves the scope root, *block* or *keys*

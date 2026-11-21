@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/codex/hooks/user-prompt-secret-guard.sh",
+            "statusMessage": "Checking prompt"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/codex/hooks/pre-bash-guard.sh",
+            "statusMessage": "Checking command"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/codex/hooks/pre-write-protect.sh",
+            "statusMessage": "Checking protected path"
+          }
+        ]
+      }
+    ]
+  }
+}

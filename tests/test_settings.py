@@ -58,10 +58,45 @@ def configured(home):
 def test_s1_4_2_claude_owned_keys_only(configured):
     assert run(app, ["apply"]) == ExitCode.OK
     actual = json.loads((configured / CLAUDE).read_text())
-    assert "hooks" not in actual
     assert actual["outputStyle"] == "concise"
     expected = json.loads((FIXTURES / "settings.json").read_text())
+    prefix = configured / ".rn-forge/share/agentkit/claude/hooks"
+
+    def command(script, message):
+        return {
+            "type": "command",
+            "command": str(prefix / script),
+            "statusMessage": message,
+        }
+
     expected.update(
+        hooks={
+            "UserPromptSubmit": [
+                {"hooks": [command("user-prompt-secret-guard.sh", "Checking prompt")]}
+            ],
+            "PreToolUse": [
+                {
+                    "matcher": "Bash",
+                    "hooks": [command("pre-bash-guard.sh", "Checking command")],
+                },
+                {
+                    "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+                    "hooks": [
+                        command("pre-write-protect.sh", "Checking protected path")
+                    ],
+                },
+            ],
+            "SessionStart": [
+                {
+                    "matcher": "compact",
+                    "hooks": [
+                        command(
+                            "session-compact-context.sh", "Restoring compacted context"
+                        )
+                    ],
+                }
+            ],
+        },
         effortLevel="medium",
         outputStyle="concise",
         extraKnownMarketplaces={

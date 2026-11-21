@@ -29,7 +29,7 @@ dogfooding its own repository block.
 | [F2.1 — Machine instruction blocks](../../specs/epics/E2-instruction-files/F2.1-machine-instruction-blocks.md) | E2 | Closed |
 | [F2.2 — Repository block and CLAUDE.md seed](../../specs/epics/E2-instruction-files/F2.2-repository-block.md) | E2 | Closed |
 | [F2.3 — Instruction doctor checks](../../specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) | E2 | Closed |
-| [F3.1 — Guard hooks](../../specs/epics/E3-asset-pack/F3.1-guard-hooks.md) | E3 | Active |
+| [F3.1 — Guard hooks](../../specs/epics/E3-asset-pack/F3.1-guard-hooks.md) | E3 | Closed |
 | [F3.2 — Skills for both agents](../../specs/epics/E3-asset-pack/F3.2-skills.md) | E3 | Closed |
 | [F4.1 — Product and install](../../specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md) | E4 | Closed |
 | [F4.2 — Machine cutover](../../specs/epics/E4-lifecycle-and-cutover/F4.2-machine-cutover.md) | E4 | Active |
@@ -55,9 +55,8 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-Closed: F1.1, F1.2, F1.3, F2.1, F2.2, F3.2 and F4.1. rn-forge-commons 0.10.1,
-with the `keys` kind, is on PyPI and agentkit's floor; F1.4's settings artifacts
-(S1.4.2) and the hook registration that names them (S3.1.2) are next.
+E1, E2 and E3 are closed, and so are F4.1 and F4.3. F4.2 remains: its runbook,
+then the owner's run of it on this machine.
 
 ## Commits
 
