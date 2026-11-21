@@ -18,6 +18,12 @@ from rn_forge.agentkit.targets import Target
 
 AGENTS_BLOCK = ManagedBlock("rn-forge agentkit", comment="<!--")
 CLAUDE_SEED = "@AGENTS.md\n"
+GITIGNORE_BLOCK = ManagedBlock("rn-forge agentkit")
+GITIGNORE_BODY = (
+    ".rn-forge/agentkit/backups/\n"
+    ".rn-forge/agentkit/.staging/\n"
+    ".rn-forge/agentkit/state.lock\n"
+)
 _KEYS = ("worktree_root", "shared_checkout", "story_workflow")
 
 
@@ -60,7 +66,8 @@ def render(target: Target, sources: MergeResult) -> list[Artifact]:
     """Render the repository-scope artifacts for *target*.
 
     At repository scope this is the optional AGENTS.md block, then a CLAUDE.md
-    seed that is written only when the file is absent.
+    seed that is written only when the file is absent, then a .gitignore block
+    for the derived files.
 
     Raises:
         SourceError: A `[repo]` key is unknown or has the wrong type.
@@ -74,4 +81,7 @@ def render(target: Target, sources: MergeResult) -> list[Artifact]:
     if body:
         artifacts.append(Artifact("AGENTS.md", ArtifactKind.BLOCK, body, AGENTS_BLOCK))
     artifacts.append(Artifact("CLAUDE.md", ArtifactKind.SEEDED, CLAUDE_SEED))
+    artifacts.append(
+        Artifact(".gitignore", ArtifactKind.BLOCK, GITIGNORE_BODY, GITIGNORE_BLOCK)
+    )
     return artifacts
