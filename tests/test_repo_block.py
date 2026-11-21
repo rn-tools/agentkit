@@ -26,11 +26,11 @@ ALL_KEYS = (
 
 BLOCK = (
     "<!-- BEGIN rn-forge agentkit -->\n"
-    "## Agent workflow\n\n"
+    "\n## Agent workflow\n\n"
     "- Worktrees: create each one under `../myrepo-wt/`.\n"
     "- Shared checkout: commit by explicit path, never `git add -A`, "
-    "and re-check HEAD before committing.\n"
-    "- Story workflow: Pick a story; build it.\n"
+    "and re-check\n  HEAD before committing.\n"
+    "- Story workflow: Pick a story; build it.\n\n"
     "<!-- END rn-forge agentkit -->\n"
 )
 
@@ -94,7 +94,7 @@ def test_s2_2_1_unsetting_keys_removes_block(home, repo):
 
 def test_s2_2_1_repo_placeholder_is_the_directory_name():
     assert agents_block({"worktree_root": "../{repo}-wt/"}, "myrepo") == (
-        "## Agent workflow\n\n- Worktrees: create each one under `../myrepo-wt/`.\n"
+        "\n## Agent workflow\n\n- Worktrees: create each one under `../myrepo-wt/`.\n\n"
     )
 
 
@@ -136,3 +136,71 @@ def test_s2_2_1_machine_scope_renders_nothing(home, tmp_path):
         repo_overlay=target.repo_overlay,
     )
     assert repository.render(target, sources) == []
+
+
+def test_s2_2_4_body_has_blank_lines_and_wraps():
+    body = agents_block(
+        {
+            "worktree_root": "../{repo}-wt/",
+            "shared_checkout": True,
+            "story_workflow": "Pick a story;\n  build it.",
+        },
+        "myrepo",
+    )
+    assert body.startswith("\n## Agent workflow\n\n")
+    assert body.endswith("\n\n")
+    lines = body.splitlines()
+    assert all(len(line) <= 80 for line in lines)
+    shared = next(
+        i for i, line in enumerate(lines) if line.startswith("- Shared checkout:")
+    )
+    assert lines[shared + 1].startswith("  ")
+    assert lines[shared + 2].startswith("- Story workflow:")
+
+
+@pytest.mark.parametrize(
+    "config",
+    [
+        ALL_KEYS,
+        '[repo]\nstory_workflow = "'
+        + "Plan the work carefully and check the context before running "
+        + "`a command with spaces` "
+        + "then review the results and update the story with the outcome. " * 4
+        + '"\n',
+    ],
+)
+def test_s2_2_4_block_is_mdformat_stable(home, repo, config):
+    mdformat = pytest.importorskip("mdformat")
+    path = repo / "AGENTS.md"
+    path.write_text(mdformat.text(KILN_AGENTS, options={"wrap": 80}))
+    overlay(repo, config)
+    assert apply_repo(repo) == ExitCode.OK
+    text = path.read_text()
+    assert mdformat.text(text, options={"wrap": 80}) == text
+
+
+def test_s2_2_4_formatted_file_plans_unchanged(home, repo, capsys):
+    mdformat = pytest.importorskip("mdformat")
+    path = repo / "AGENTS.md"
+    path.write_text(mdformat.text(KILN_AGENTS, options={"wrap": 80}))
+    overlay(repo, ALL_KEYS)
+    assert apply_repo(repo) == ExitCode.OK
+    path.write_text(mdformat.text(path.read_text(), options={"wrap": 80}))
+    capsys.readouterr()
+    assert (
+        run(app, ["--json", "plan", "--scope", "repo", "--repo", str(repo)])
+        == ExitCode.OK
+    )
+    changes = json.loads(capsys.readouterr().out)["changes"]
+    assert (
+        next(change for change in changes if change["path"] == "AGENTS.md")["action"]
+        == "unchanged"
+    )
+
+
+def test_s2_2_4_code_span_is_not_split():
+    from rn_forge.agentkit.repository import _wrap
+
+    span = "`a command with spaces`"
+    wrapped = _wrap("- Story workflow: " + "word " * 10 + span + " afterward")
+    assert span in wrapped.splitlines()[1]

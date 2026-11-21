@@ -6,6 +6,7 @@ scope whatever agents are selected, and never at machine scope.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from typing import Any
 
@@ -25,6 +26,8 @@ GITIGNORE_BODY = (
     ".rn-forge/agentkit/state.lock\n"
 )
 _KEYS = ("worktree_root", "shared_checkout", "story_workflow")
+WRAP = 80
+_TOKEN = re.compile(r"(?:`[^`]*`|[^\s`])+")
 
 
 def _validate(table: Mapping[str, Any]) -> None:
@@ -40,6 +43,20 @@ def _validate(table: Mapping[str, Any]) -> None:
             raise SourceError(
                 "[repo] {!r}: expected {}, got {!r}", key, expected.__name__, value
             )
+
+
+def _wrap(text: str) -> str:
+    lines: list[str] = []
+    line = ""
+    for token in _TOKEN.findall(text):
+        if line and len(line) + 1 + len(token) > WRAP:
+            lines.append(line)
+            line = "  " + token
+        else:
+            line += (" " if line else "") + token
+    if line:
+        lines.append(line)
+    return "\n".join(lines)
 
 
 def agents_block(table: Mapping[str, Any], repo_name: str) -> str:
@@ -59,7 +76,7 @@ def agents_block(table: Mapping[str, Any], repo_name: str) -> str:
         lines.append(f"- Story workflow: {' '.join(story_workflow.split())}")
     if not lines:
         return ""
-    return "## Agent workflow\n\n" + "\n".join(lines) + "\n"
+    return "\n## Agent workflow\n\n" + "\n".join(_wrap(line) for line in lines) + "\n\n"
 
 
 def render(target: Target, sources: MergeResult) -> list[Artifact]:
