@@ -17,6 +17,7 @@ from rn_forge.agentkit.sources import Scope, SourceError
 from rn_forge.agentkit.targets import Target
 
 AGENTS_BLOCK = ManagedBlock("rn-forge agentkit", comment="<!--")
+CLAUDE_SEED = "@AGENTS.md\n"
 _KEYS = ("worktree_root", "shared_checkout", "story_workflow")
 
 
@@ -58,6 +59,9 @@ def agents_block(table: Mapping[str, Any], repo_name: str) -> str:
 def render(target: Target, sources: MergeResult) -> list[Artifact]:
     """Render the repository-scope artifacts for *target*.
 
+    At repository scope this is the optional AGENTS.md block, then a CLAUDE.md
+    seed that is written only when the file is absent.
+
     Raises:
         SourceError: A `[repo]` key is unknown or has the wrong type.
     """
@@ -66,6 +70,8 @@ def render(target: Target, sources: MergeResult) -> list[Artifact]:
     table = sources.config.get("repo", {})
     _validate(table)
     body = agents_block(table, target.root.name)
-    if not body:
-        return []
-    return [Artifact("AGENTS.md", ArtifactKind.BLOCK, body, AGENTS_BLOCK)]
+    artifacts: list[Artifact] = []
+    if body:
+        artifacts.append(Artifact("AGENTS.md", ArtifactKind.BLOCK, body, AGENTS_BLOCK))
+    artifacts.append(Artifact("CLAUDE.md", ArtifactKind.SEEDED, CLAUDE_SEED))
+    return artifacts
