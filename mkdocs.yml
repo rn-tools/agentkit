@@ -68,6 +68,7 @@ nav:
       - Development: guides/development.md
   - Runbooks:
       - runbooks/index.md
+      - Cut over from agentkit v0: runbooks/cutover-from-v0.md
       - Recovering from drift: runbooks/recovering-from-drift.md
   - Reference:
       - reference/index.md

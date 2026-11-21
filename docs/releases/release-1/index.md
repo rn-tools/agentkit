@@ -55,8 +55,8 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-E1, E2 and E3 are closed, and so are F4.1 and F4.3. F4.2 remains: its runbook,
-then the owner's run of it on this machine.
+E1, E2 and E3 are closed, and so are F4.1 and F4.3. F4.2 remains: its runbook is
+written, and the owner's run of it on this machine is next.
 
 ## Commits
 
