@@ -55,6 +55,7 @@ def fake(home, tmp_path, monkeypatch):
     (assets / "hook.sh").write_text("#!/bin/sh\necho ${#}\n")
     (assets / "codex.md").write_text("codex\n")
     monkeypatch.setattr(adapters, "ASSETS", assets)
+    monkeypatch.setattr(adapters, "COMMON", {})
     monkeypatch.setattr(
         adapters,
         "ADAPTERS",
@@ -88,6 +89,7 @@ def test_s1_4_1_no_two_artifacts_share_a_destination():
             for adapter in adapters.ADAPTERS.values()
             for spec in adapter.specs.get(scope, ())
         ]
+        paths += [spec.path for spec in adapters.COMMON.get(scope, ())]
         assert len(paths) == len(set(paths))
 
 

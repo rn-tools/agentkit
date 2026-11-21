@@ -61,7 +61,7 @@ def build_plan(
         *repository.render(target, sources),
     ]
     entries = _store(target).load()
-    others = adapters.owned_paths(target.scope, [a for a in Agent if a not in agents])
+    others = adapters.owned_paths(target, [a for a in Agent if a not in agents])
     kept = {key: entry for key, entry in entries.items() if entry.path in others}
     rest = {key: entry for key, entry in entries.items() if key not in kept}
     return plan(target.root, artifacts, rest, force=force), rest, kept
@@ -77,7 +77,7 @@ def run_apply(
     """Plan, then apply transactionally; blocked plans raise."""
     planned, entries, kept = build_plan(target, agents, force=force)
     written = {c.path for c in planned.changes if c.artifact is not None}
-    executable = sorted(adapters.executable_paths(target.scope, agents) & written)
+    executable = sorted(adapters.executable_paths(target, agents) & written)
 
     def verify() -> None:
         for path in executable:

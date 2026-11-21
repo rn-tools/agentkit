@@ -2,25 +2,28 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from importlib.resources import files
 from pathlib import Path
 from typing import cast
 
+from rn_forge.commons.exceptions import AppException
 from rn_forge.commons.generation import Artifact
 from rn_forge.commons.lang.collections import MergeResult
 from rn_forge.commons.text.templates import TemplateEngine
 
-from rn_forge.agentkit.adapters import claude, codex
-from rn_forge.agentkit.adapters.spec import Adapter, ArtifactSpec
+from rn_forge.agentkit.adapters import claude, codex, hooks
+from rn_forge.agentkit.adapters.spec import Adapter, ArtifactSpec, Base
 from rn_forge.agentkit.sources import Scope, SourceError
 from rn_forge.agentkit.targets import Agent, Target
 
 __all__ = [
     "ADAPTERS",
     "ASSETS",
+    "COMMON",
     "Adapter",
     "ArtifactSpec",
+    "Base",
     "executable_paths",
     "owned_paths",
     "render",
@@ -33,8 +36,36 @@ ADAPTERS: dict[Agent, Adapter] = {
 }
 
 
+COMMON: dict[Scope, tuple[ArtifactSpec, ...]] = {Scope.MACHINE: hooks.COMMON}
+
+
 def _specs(scope: Scope, agents: Iterable[Agent]) -> list[ArtifactSpec]:
     return [spec for agent in agents for spec in ADAPTERS[agent].specs.get(scope, ())]
+
+
+def _destination(target: Target, spec: ArtifactSpec) -> str:
+    if spec.base is Base.ROOT:
+        return spec.path
+    if not target.work_dir.is_relative_to(target.root):
+        raise AppException(
+            "{} is outside {}: agentkit installs its hook scripts there, "
+            "so RNF_HOME must be under HOME",
+            target.work_dir,
+            target.root,
+        )
+    return (target.work_dir.relative_to(target.root) / spec.path).as_posix()
+
+
+def _emit(
+    target: Target, spec: ArtifactSpec, context: Mapping[str, object]
+) -> Artifact:
+    if spec.template:
+        content = TemplateEngine.cached(directory=str(ASSETS)).render(
+            spec.source, context
+        )
+    else:
+        content = (ASSETS / spec.source).read_text(encoding="utf-8")
+    return Artifact(_destination(target, spec), spec.kind, content, block=spec.block)
 
 
 def render(
@@ -47,7 +78,7 @@ def render(
     """
     artifacts: list[Artifact] = []
     for agent in agents:
-        context = {
+        context: dict[str, object] = {
             "agent": agent.value,
             "scope": target.scope.value,
             "config": sources.config.get(agent.value, {}),
@@ -63,24 +94,29 @@ def render(
                 agent.value,
                 disabled,
             )
-        for spec in _specs(target.scope, [agent]):
-            if spec.skill in cast("list[str]", disabled):
-                continue
-            if spec.template:
-                content = TemplateEngine.cached(directory=str(ASSETS)).render(
-                    spec.source, context
-                )
-            else:
-                content = (ASSETS / spec.source).read_text(encoding="utf-8")
-            artifacts.append(Artifact(spec.path, spec.kind, content, block=spec.block))
+        artifacts.extend(
+            _emit(target, spec, context)
+            for spec in _specs(target.scope, [agent])
+            if spec.skill not in cast("list[str]", disabled)
+        )
+    if agents:
+        common: dict[str, object] = {
+            "agent": "_common",
+            "scope": target.scope.value,
+            "config": {},
+        }
+        artifacts.extend(
+            _emit(target, spec, common) for spec in COMMON.get(target.scope, ())
+        )
     return artifacts
 
 
-def owned_paths(scope: Scope, agents: Iterable[Agent]) -> frozenset[str]:
-    """The paths the adapters of *agents* declare for *scope*, without rendering."""
-    return frozenset(spec.path for spec in _specs(scope, agents))
+def owned_paths(target: Target, agents: Iterable[Agent]) -> frozenset[str]:
+    """The paths the adapters of *agents* declare for the target, without rendering."""
+    return frozenset(_destination(target, s) for s in _specs(target.scope, agents))
 
 
-def executable_paths(scope: Scope, agents: Iterable[Agent]) -> frozenset[str]:
+def executable_paths(target: Target, agents: Iterable[Agent]) -> frozenset[str]:
     """The declared paths of *agents* that must be mode 0755 after apply."""
-    return frozenset(spec.path for spec in _specs(scope, agents) if spec.executable)
+    specs = [*_specs(target.scope, agents), *COMMON.get(target.scope, ())]
+    return frozenset(_destination(target, s) for s in specs if s.executable)

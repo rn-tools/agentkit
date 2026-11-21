@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from enum import StrEnum
 from pathlib import PurePosixPath
 
 from rn_forge.commons.fs.blocks import ManagedBlock
@@ -13,12 +14,20 @@ from rn_forge.agentkit.sources import Scope
 from rn_forge.agentkit.targets import Agent
 
 
+class Base(StrEnum):
+    """What an artifact's path is relative to."""
+
+    ROOT = "root"
+    SHARE = "share"
+
+
 @dataclass(frozen=True, slots=True)
 class ArtifactSpec:
     """One artifact an adapter writes: where, what kind, and its packaged source.
 
     Args:
-        path: POSIX path relative to the scope root.
+        path: POSIX path relative to the scope root, or, for ``Base.SHARE``, to
+            the target's work dir.
         kind: How the artifact is written.
         source: Packaged asset path, relative to the assets directory.
         template: Render *source* through the template engine instead of
@@ -27,6 +36,7 @@ class ArtifactSpec:
         executable: Make the file mode 0755 after apply; managed files only.
         skill: The skill name, if this artifact installs a skill; the overlay's
             ``skills.disabled`` can then turn it off.
+        base: What *path* is relative to.
 
     Raises:
         ValueError: *path* is empty or leaves the scope root, *block* does not
@@ -40,6 +50,7 @@ class ArtifactSpec:
     block: ManagedBlock | None = None
     executable: bool = False
     skill: str | None = None
+    base: Base = Base.ROOT
 
     def __post_init__(self) -> None:
         """Reject a spec that cannot be rendered safely."""
