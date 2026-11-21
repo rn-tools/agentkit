@@ -25,7 +25,7 @@ dogfooding its own repository block.
 | [F1.1 — Sources and layers](../../specs/epics/E1-apply-engine/F1.1-sources-and-layers.md) | E1 | Closed |
 | [F1.2 — Owned key paths in shared settings files](../../specs/epics/E1-apply-engine/F1.2-owned-key-paths.md) | E1 | Closed |
 | [F1.3 — Commands](../../specs/epics/E1-apply-engine/F1.3-commands.md) | E1 | Closed |
-| [F1.4 — Agent adapters](../../specs/epics/E1-apply-engine/F1.4-agent-adapters.md) | E1 | Active |
+| [F1.4 — Agent adapters](../../specs/epics/E1-apply-engine/F1.4-agent-adapters.md) | E1 | Closed |
 | [F2.1 — Machine instruction blocks](../../specs/epics/E2-instruction-files/F2.1-machine-instruction-blocks.md) | E2 | Closed |
 | [F2.2 — Repository block and CLAUDE.md seed](../../specs/epics/E2-instruction-files/F2.2-repository-block.md) | E2 | Active |
 | [F2.3 — Instruction doctor checks](../../specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) | E2 | Closed |

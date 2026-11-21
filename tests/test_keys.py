@@ -42,6 +42,10 @@ def home(tmp_path, monkeypatch):
 
 @pytest.fixture
 def fake(home, monkeypatch):
+    monkeypatch.setattr(
+        "rn_forge.agentkit.sources.load_packaged",
+        lambda: {"claude": {}, "codex": {}},
+    )
     claude = ArtifactSpec(
         CLAUDE, ArtifactKind.KEYS, "", keys=("effortLevel", "permissions.deny")
     )
