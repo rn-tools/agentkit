@@ -16,6 +16,7 @@ from rn_forge.commons.fs.state import StateStore
 from rn_forge.commons.generation import StateEntry
 from rn_forge.tooling.install import ToolHome
 
+from rn_forge.agentkit.instruction_checks import instruction_findings
 from rn_forge.agentkit.sources import Scope, SourceError, load_overlay
 from rn_forge.agentkit.targets import Agent, Target, resolve_target
 
@@ -86,6 +87,7 @@ def scope_findings(target: Target, agents: Sequence[Agent]) -> list[Finding]:
             found.append(
                 Finding("agentkit.overlay-invalid", Severity.ERROR, error.message)
             )
+    found.extend(instruction_findings(target))
     return found
 
 

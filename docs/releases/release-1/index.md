@@ -28,7 +28,7 @@ dogfooding its own repository block.
 | [F1.4 — Agent adapters](../../specs/epics/E1-apply-engine/F1.4-agent-adapters.md) | E1 | Active |
 | [F2.1 — Machine instruction blocks](../../specs/epics/E2-instruction-files/F2.1-machine-instruction-blocks.md) | E2 | Closed |
 | [F2.2 — Repository block and CLAUDE.md seed](../../specs/epics/E2-instruction-files/F2.2-repository-block.md) | E2 | Closed |
-| [F2.3 — Instruction doctor checks](../../specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) | E2 | New |
+| [F2.3 — Instruction doctor checks](../../specs/epics/E2-instruction-files/F2.3-instruction-doctor-checks.md) | E2 | Closed |
 | [F3.1 — Guard hooks](../../specs/epics/E3-asset-pack/F3.1-guard-hooks.md) | E3 | Active |
 | [F3.2 — Skills for both agents](../../specs/epics/E3-asset-pack/F3.2-skills.md) | E3 | Closed |
 | [F4.1 — Product and install](../../specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md) | E4 | Closed |
