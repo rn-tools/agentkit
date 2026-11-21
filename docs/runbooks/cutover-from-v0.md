@@ -27,17 +27,17 @@ saved=(
   .codex/AGENTS.md .codex/config.toml .codex/hooks.json .codex/hooks .codex/skills
   .rn-forge/share/agentkit
 )
-for path in "${saved[@]}"; do
-  if [[ ! -e "$HOME/$path" && ! -L "$HOME/$path" ]]; then
-    echo "skipped $path (absent)"
+for rel in "${saved[@]}"; do
+  if [[ ! -e "$HOME/$rel" && ! -L "$HOME/$rel" ]]; then
+    echo "skipped $rel (absent)"
     continue
   fi
-  mkdir -p "$backup/${path%/*}" || exit 1
-  cp -a "$HOME/$path" "$backup/$path" || exit 1
+  mkdir -p "$backup/${rel%/*}" || exit 1
+  cp -a "$HOME/$rel" "$backup/$rel" || exit 1
 done
 ls -la "$backup"
-for path in "${saved[@]}"; do
-  [[ ! -e "$HOME/$path" && ! -L "$HOME/$path" ]] || ls -ld "$backup/$path"
+for rel in "${saved[@]}"; do
+  [[ ! -e "$HOME/$rel" && ! -L "$HOME/$rel" ]] || ls -ld "$backup/$rel"
 done
 ```
 
@@ -144,9 +144,9 @@ conflicts=(
   .codex/skills/sonar-cleanup/SKILL.md
 )
 force=()
-for path in "${conflicts[@]}"; do
-  ls -l "$backup/$path" "$HOME/$path"
-  force+=(--force "$path")
+for rel in "${conflicts[@]}"; do
+  ls -l "$backup/$rel" "$HOME/$rel"
+  force+=(--force "$rel")
 done
 ```
 
@@ -158,18 +158,18 @@ if ! cmp "$backup/.codex/hooks.json" ~/.codex/hooks.json; then
   cp -a "$backup/.codex/hooks.json" ~/.codex/hooks.json
   exit 1
 fi
-for path in "${conflicts[@]}"; do
-  [[ $path != .codex/hooks.json ]] || continue
-  if diff -u "$backup/$path" "$HOME/$path"; then
+for rel in "${conflicts[@]}"; do
+  [[ $rel != .codex/hooks.json ]] || continue
+  if diff -u "$backup/$rel" "$HOME/$rel"; then
     continue
   else
     status=$?
   fi
   if [[ $status == 1 ]]; then
-    read -r -p "Type expected only if every change to $path is intended: " answer || answer=
+    read -r -p "Type expected only if every change to $rel is intended: " answer || answer=
     [[ $answer != expected ]] || continue
   fi
-  cp -a "$backup/$path" "$HOME/$path"
+  cp -a "$backup/$rel" "$HOME/$rel"
   exit 1
 done
 agentkit apply
@@ -201,9 +201,9 @@ the markers.
 **Owner confirms** before running.
 
 ```bash
-read -r -p 'Path from the warning, relative to home: ' path
-case "$path" in
-  .claude/CLAUDE.md|.codex/AGENTS.md) vi "$HOME/$path" ;;
+read -r -p 'Path from the warning, relative to home: ' rel
+case "$rel" in
+  .claude/CLAUDE.md|.codex/AGENTS.md) vi "$HOME/$rel" ;;
   *) exit 1 ;;
 esac
 ```
@@ -213,8 +213,8 @@ instruction-file warnings.
 
 ## 8. Remove the dead leftovers
 
-Inspect the first line of each old Claude hook and search the active settings
-for the old directory. Continue only if all five headers identify
+Inspect the line after the shebang in each old Claude hook and search the active
+settings for the old directory. Continue only if all five headers identify
 `# kiln:claude` and the search returns no matches.
 
 ```bash
@@ -225,9 +225,9 @@ claude_hooks=(
   ~/.claude/hooks/session-compact-context.sh
   ~/.claude/hooks/user-prompt-secret-guard.sh
 )
-for path in "${claude_hooks[@]}"; do
-  printf '%s ' "$path"
-  head -1 "$path"
+for rel in "${claude_hooks[@]}"; do
+  printf '%s ' "$rel"
+  sed -n 2p "$rel"
 done
 if grep -nF '.claude/hooks/' ~/.claude/settings.json; then exit 1; else test "$?" -eq 1; fi
 ```
@@ -238,8 +238,8 @@ checkout and both targets must be missing.
 ```bash
 codex_links=(~/.codex/hooks/pre-bash-guard.sh ~/.codex/hooks/user-prompt-secret-guard.sh)
 ls -l "${codex_links[@]}"
-for path in "${codex_links[@]}"; do
-  test -L "$path" && test ! -e "$path" || exit 1
+for rel in "${codex_links[@]}"; do
+  test -L "$rel" && test ! -e "$rel" || exit 1
 done
 ls -ld ~/.rn-forge/agentkit-rescue/
 ```
@@ -247,9 +247,9 @@ ls -ld ~/.rn-forge/agentkit-rescue/
 **Owner confirms** before running.
 
 ```bash
-for path in "${claude_hooks[@]}" "${codex_links[@]}"; do
-  rm -i "$path"
-  test ! -e "$path" && test ! -L "$path" || exit 1
+for rel in "${claude_hooks[@]}" "${codex_links[@]}"; do
+  rm -i "$rel"
+  test ! -e "$rel" && test ! -L "$rel" || exit 1
 done
 rm -rI ~/.rn-forge/agentkit-rescue
 test ! -e ~/.rn-forge/agentkit-rescue
@@ -287,8 +287,8 @@ list from step 1 into it. Check every present copy before replacing anything.
 ```bash
 backup=$(cat ~/.rn-forge/backup/cutover-v0-current)
 ls -ld "$backup" ~/.rn-forge/agentkit-v0/current
-for path in "${saved[@]}"; do
-  [[ ! -e "$backup/$path" && ! -L "$backup/$path" ]] || ls -ld "$backup/$path"
+for rel in "${saved[@]}"; do
+  [[ ! -e "$backup/$rel" && ! -L "$backup/$rel" ]] || ls -ld "$backup/$rel"
 done
 ```
 
@@ -296,13 +296,13 @@ done
 
 ```bash
 displaced=$(mktemp -d "$backup/rollback-XXXXXX")
-for path in "${saved[@]}"; do
-  [[ -e "$backup/$path" || -L "$backup/$path" ]] || continue
-  if [[ -e "$HOME/$path" || -L "$HOME/$path" ]]; then
-    mkdir -p "$displaced/${path%/*}"
-    mv "$HOME/$path" "$displaced/$path"
+for rel in "${saved[@]}"; do
+  [[ -e "$backup/$rel" || -L "$backup/$rel" ]] || continue
+  if [[ -e "$HOME/$rel" || -L "$HOME/$rel" ]]; then
+    mkdir -p "$displaced/${rel%/*}"
+    mv "$HOME/$rel" "$displaced/$rel"
   fi
-  cp -a "$backup/$path" "$HOME/$path"
+  cp -a "$backup/$rel" "$HOME/$rel"
 done
 if [[ -d ~/.rn-forge/agentkit ]]; then
   mv ~/.rn-forge/agentkit "$displaced/v1-install"
