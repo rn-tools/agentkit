@@ -11,7 +11,7 @@ sections below are derived from the epic, feature and release pages by
 
 | Release | Status | Features |
 | -- | -- | -- |
-| [Release 1 — agentkit v1](../releases/release-1/index.md) | in progress | 3 Active · 1 New · 8 Closed |
+| [Release 1 — agentkit v1](../releases/release-1/index.md) | in progress | 4 Active · 1 New · 7 Closed |
 
 ## Backlog
 
