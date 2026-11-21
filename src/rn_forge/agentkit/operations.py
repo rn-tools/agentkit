@@ -16,7 +16,7 @@ from rn_forge.commons.generation import (
     plan,
 )
 
-from rn_forge.agentkit import adapters
+from rn_forge.agentkit import adapters, repository
 from rn_forge.agentkit.sources import load_sources
 from rn_forge.agentkit.targets import Agent, Target
 
@@ -34,7 +34,10 @@ def build_plan(
         user_overlay=target.user_overlay,
         repo_overlay=target.repo_overlay,
     )
-    artifacts = adapters.render(target, agents, sources)
+    artifacts = [
+        *adapters.render(target, agents, sources),
+        *repository.render(target, sources),
+    ]
     entries = _store(target).load()
     return plan(target.root, artifacts, entries, force=force), entries
 
