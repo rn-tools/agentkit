@@ -14,7 +14,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "rn-forge-cli" },
-    { name = "rn-forge-commons" },
+    { name = "rn-forge-commons", extra = ["templates"] },
     { name = "rn-forge-tooling" },
 ]
 
@@ -44,7 +44,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "rn-forge-cli", specifier = ">=0.2.0,<0.3" },
-    { name = "rn-forge-commons", specifier = ">=0.10.0,<0.11" },
+    { name = "rn-forge-commons", extras = ["templates"], specifier = ">=0.10.0,<0.11" },
     { name = "rn-forge-tooling", specifier = ">=0.3.3,<0.4" },
 ]
 
@@ -1317,6 +1317,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/65/54/c77904a7add24c895d9e5ba877e12fe5e71ea687c000a7e724c7a111ccef/rn_forge_commons-0.10.0.tar.gz", hash = "sha256:161c4c9c5968d2e06dc02349ad65e55aa72548495e8ef12bb0e4216c97e4e82d", size = 99660, upload-time = "2026-11-18T05:30:48.824Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c1/07/8ddada1e1c6a84d60726dc7ef1977bafa377f32aac69aed023dd8d8ffcc9/rn_forge_commons-0.10.0-py3-none-any.whl", hash = "sha256:bea0cd873e178dd5619f968b6b25a907a3b5ffeda33d898238ca274dec10913f", size = 118863, upload-time = "2026-11-18T05:30:47.162Z" },
+]
+
+[package.optional-dependencies]
+templates = [
+    { name = "jinja2" },
 ]
 
 [[package]]
