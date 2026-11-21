@@ -58,8 +58,7 @@ cutover runbook (F4.2) moves this machine across.
 
 E1 to E4 are closed. The cutover ran on this machine on 2026-11-21:
 `agentkit doctor` exits 0 and `agentkit apply` reports all 18 artifacts
-`unchanged`. A final commit carrying the runbook fixes from that run is still to
-come.
+`unchanged`. The runbook fixes from that run landed in `e181d41`.
 
 ## Commits
 
@@ -67,7 +66,7 @@ come.
 git log --oneline -E --grep='S[1-4]\.[0-9]+\.[0-9]+|F[1-4]\.[0-9]+'
 ```
 
-Refreshed at the cut, 2026-11-21, before the final runbook-fix commit:
+Refreshed at the cut, 2026-11-21, before `e181d41`:
 
 ```text
 ccdda01 S4.2.2 runbook
@@ -117,4 +116,4 @@ eb74c10 S4.1.1
 
 | Deliverable | Version | Tag | Commit | Verification |
 | -- | -- | -- | -- | -- |
-| agentkit | — | — | final runbook-fix commit on `feature/release-1`, not yet made | `agentkit doctor` exit 0 and `agentkit apply` all 18 artifacts `unchanged` on this machine, 2026-11-21 |
+| agentkit | — | — | `e181d41` | `agentkit doctor` exit 0 and `agentkit apply` all 18 artifacts `unchanged` on this machine, 2026-11-21 |
