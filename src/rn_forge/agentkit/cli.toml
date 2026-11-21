@@ -19,5 +19,9 @@ target = "rn_forge.agentkit.commands:plan"
 name = "remove"
 target = "rn_forge.agentkit.commands:remove"
 
+[[cli.commands]]
+name = "migrate-v0"
+target = "rn_forge.agentkit.commands:migrate_v0"
+
 [lifecycle]
 product = "rn_forge.agentkit.product:PRODUCT"

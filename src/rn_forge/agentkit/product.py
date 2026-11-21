@@ -15,6 +15,7 @@ from pathlib import Path
 from rn_forge.commons.findings import Finding, Severity
 from rn_forge.tooling.install import Check, PythonTool, ToolHome
 
+from rn_forge.agentkit.cutover import check_v0
 from rn_forge.agentkit.findings import check_machine
 
 
@@ -44,8 +45,8 @@ class Tool(PythonTool):
     """Install the AgentKit console script; check its share dir and the machine scope."""
 
     def checks(self) -> Sequence[Check]:
-        """Check the share dir and the machine scope's findings."""
-        return (check_share_dir, check_machine)
+        """Check the share dir, machine scope, and v0 install and state."""
+        return (check_share_dir, check_machine, check_v0)
 
 
 PRODUCT = Tool(

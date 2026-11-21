@@ -370,7 +370,7 @@
     },
     "src/rn_forge/agentkit/cli.toml": {
       "begin_marker": null,
-      "content_hash": "880e96443ee8462ff99251245834f361c5685d0d5ab907e824938bd5cc6b3c96",
+      "content_hash": "f4c71aa4ea54a95a2f9579b99b77ff92ed6f639f45e58f67a20673fc10bc2a1c",
       "end_marker": null,
       "key_paths": null,
       "kind": "managed",
@@ -434,7 +434,7 @@
     }
   },
   "metadata": {
-    "config_hash": "f72722ec06c1f910cf7e93d849cd11a560ec5aa1a378722d985b53f5ac16e9cb",
+    "config_hash": "09ae90fa06e891096e1b807d3f59aa9fc66de2271f446427678bcb75fda8deae",
     "config_provenance": {
       "archetype.python-tool.module": {
         "layer": "flags",
@@ -490,6 +490,10 @@
           {
             "name": "remove",
             "target": "rn_forge.agentkit.commands:remove"
+          },
+          {
+            "name": "migrate-v0",
+            "target": "rn_forge.agentkit.commands:migrate_v0"
           }
         ]
       },

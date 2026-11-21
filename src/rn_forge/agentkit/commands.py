@@ -19,7 +19,7 @@ from rn_forge.commons.generation import Change
 from rn_forge.commons.runtime.console import OutputMode, console
 from rn_forge.tooling.install import rnf_home
 
-from rn_forge.agentkit import operations
+from rn_forge.agentkit import cutover, operations
 from rn_forge.agentkit.findings import scope_findings
 from rn_forge.agentkit.sources import Scope
 from rn_forge.agentkit.targets import Agent, Target, resolve_target
@@ -131,3 +131,16 @@ def remove(
         )
     ):
         shutil.rmtree(target.work_dir)
+
+
+def migrate_v0() -> None:
+    """Rename a v0 state file to state.v0.json; never deletes it."""
+    archive = cutover.migrate_v0(rnf_home())
+    if console.mode is OutputMode.JSON:
+        console.emit({"archived": str(archive) if archive is not None else None})
+    elif archive is None:
+        console.print("nothing to migrate")
+    else:
+        console.print(
+            "renamed {} -> {}", archive.with_name("state.json"), archive, markup=False
+        )

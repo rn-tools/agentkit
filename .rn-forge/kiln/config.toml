@@ -60,6 +60,10 @@ target = "rn_forge.agentkit.commands:plan"
 name = "remove"
 target = "rn_forge.agentkit.commands:remove"
 
+[[cli.commands]]
+name = "migrate-v0"
+target = "rn_forge.agentkit.commands:migrate_v0"
+
 # The lifecycle verbs mounted under the CLI, read by rn-forge-tooling's
 # `build_tool_app` and carried as written. `kiln apply` does not read it.
 [lifecycle]
