@@ -152,9 +152,9 @@ release:
 
 ```toml
 dependencies = [
-  "rn-forge-commons>=0.10.0,<0.11",
-  "rn-forge-cli>=0.2.0,<0.3",
-  "rn-forge-tooling>=0.3.3,<0.4",
+  "rn-forge-commons>=0.10.1,<0.11",
+  "rn-forge-cli>=0.2.1,<0.3",
+  "rn-forge-tooling>=0.4.0,<0.5",
 ]
 ```
 
@@ -257,6 +257,14 @@ and keeps a key edited here as a repo override.
 `install`/`upgrade`/`uninstall`/`cleanup`/`status`/`doctor` verbs at the root,
 or under `namespace` when one is set; the product supplies `artifacts()`,
 `checks()` and `migrate()` through `rn-forge-tooling`'s `ToolProduct` adapter.
+
+## 9. kiln's architecture baseline
+
+`docs/adr/kiln/` holds the design decisions kiln's canon makes for this repo's
+product code, one managed record per file, listed in its `index.md`. They are
+part of this standard: a change to product code follows them, and a departure
+from one is an ADR of this repo's own that names the record it supersedes.
+`.importlinter` enforces the records an import contract can express.
 
 ## CI checks
 

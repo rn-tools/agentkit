@@ -12,6 +12,10 @@ def test_the_one_artifact_is_the_command_on_path():
             "bin/agentkit",
             "bin/agentkit",
         ),
+        Link(
+            "completions/_agentkit",
+            "completions/_agentkit",
+        ),
     )
 
 

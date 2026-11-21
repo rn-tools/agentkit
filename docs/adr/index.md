@@ -11,3 +11,13 @@ and history are at the bottom. Scope and rollout work belong in
 | [0002](ADR-0002.md) | Instruction files: agentkit owns a fenced block, never the body | `CLAUDE.md` and `AGENTS.md` |
 | [0003](ADR-0003.md) | Native settings files are shared; agentkit owns key paths | structured native config |
 | [0004](ADR-0004.md) | Built on the commons generation engine; drift blocks | rendering, reconciling and state |
+
+<!-- BEGIN rn-forge kiln -->
+
+## kiln's architecture baseline
+
+kiln's canon decides part of this repository's product design, in
+[kiln's architecture baseline](kiln/index.md). A decision here that departs from
+one of those records names it, and says which part it supersedes.
+
+<!-- END rn-forge kiln -->
