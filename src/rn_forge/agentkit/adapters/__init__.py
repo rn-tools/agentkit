@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Sequence
 from importlib.resources import files
 from pathlib import Path
+from typing import cast
 
 from rn_forge.commons.generation import Artifact
 from rn_forge.commons.lang.collections import MergeResult
@@ -12,7 +13,7 @@ from rn_forge.commons.text.templates import TemplateEngine
 
 from rn_forge.agentkit.adapters import claude, codex
 from rn_forge.agentkit.adapters.spec import Adapter, ArtifactSpec
-from rn_forge.agentkit.sources import Scope
+from rn_forge.agentkit.sources import Scope, SourceError
 from rn_forge.agentkit.targets import Agent, Target
 
 __all__ = [
@@ -39,7 +40,11 @@ def _specs(scope: Scope, agents: Iterable[Agent]) -> list[ArtifactSpec]:
 def render(
     target: Target, agents: Sequence[Agent], sources: MergeResult
 ) -> list[Artifact]:
-    """Render the artifacts the adapters of *agents* declare for the target scope."""
+    """Render the artifacts the adapters of *agents* declare for the target scope.
+
+    Raises:
+        SourceError: An agent's ``skills.disabled`` is not a list of strings.
+    """
     artifacts: list[Artifact] = []
     for agent in agents:
         context = {
@@ -47,7 +52,20 @@ def render(
             "scope": target.scope.value,
             "config": sources.config.get(agent.value, {}),
         }
+        disabled: object = (
+            sources.config.get(agent.value, {}).get("skills", {}).get("disabled", [])
+        )
+        if not isinstance(disabled, list) or not all(
+            isinstance(item, str) for item in cast("list[object]", disabled)
+        ):
+            raise SourceError(
+                "[{}] skills.disabled: expected a list of skill names, got {!r}",
+                agent.value,
+                disabled,
+            )
         for spec in _specs(target.scope, [agent]):
+            if spec.skill in cast("list[str]", disabled):
+                continue
             if spec.template:
                 content = TemplateEngine.cached(directory=str(ASSETS)).render(
                     spec.source, context

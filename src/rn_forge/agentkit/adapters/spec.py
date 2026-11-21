@@ -25,6 +25,8 @@ class ArtifactSpec:
             copying it verbatim.
         block: The managed block, for ``ArtifactKind.BLOCK`` only.
         executable: Make the file mode 0755 after apply; managed files only.
+        skill: The skill name, if this artifact installs a skill; the overlay's
+            ``skills.disabled`` can then turn it off.
 
     Raises:
         ValueError: *path* is empty or leaves the scope root, *block* does not
@@ -37,6 +39,7 @@ class ArtifactSpec:
     template: bool = False
     block: ManagedBlock | None = None
     executable: bool = False
+    skill: str | None = None
 
     def __post_init__(self) -> None:
         """Reject a spec that cannot be rendered safely."""
