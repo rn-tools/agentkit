@@ -23,7 +23,7 @@ dogfooding its own repository block.
 | Feature | Epic | State |
 | -- | -- | -- |
 | [F1.1 — Sources and layers](../../specs/epics/E1-apply-engine/F1.1-sources-and-layers.md) | E1 | Closed |
-| [F1.2 — Owned key paths in shared settings files](../../specs/epics/E1-apply-engine/F1.2-owned-key-paths.md) | E1 | Active |
+| [F1.2 — Owned key paths in shared settings files](../../specs/epics/E1-apply-engine/F1.2-owned-key-paths.md) | E1 | Closed |
 | [F1.3 — Commands](../../specs/epics/E1-apply-engine/F1.3-commands.md) | E1 | Closed |
 | [F1.4 — Agent adapters](../../specs/epics/E1-apply-engine/F1.4-agent-adapters.md) | E1 | Active |
 | [F2.1 — Machine instruction blocks](../../specs/epics/E2-instruction-files/F2.1-machine-instruction-blocks.md) | E2 | Closed |
@@ -55,10 +55,9 @@ cutover runbook (F4.2) moves this machine across.
 
 ## Progress
 
-F1.1, F1.3 and F4.1 are closed. S1.2.1 chose a `keys` artifact kind in
-rn-forge-commons, which ships as commons 0.10.1. S1.2.2 waits for that release
-on PyPI, and so do F1.4 (the settings artifacts) and the E2 and E3 work that
-names F1.4.
+Closed: F1.1, F1.2, F1.3, F2.1, F2.2, F3.2 and F4.1. rn-forge-commons 0.10.1,
+with the `keys` kind, is on PyPI and agentkit's floor; F1.4's settings artifacts
+(S1.4.2) and the hook registration that names them (S3.1.2) are next.
 
 ## Commits
 

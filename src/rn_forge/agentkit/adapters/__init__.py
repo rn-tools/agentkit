@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import cast
 
 from rn_forge.commons.exceptions import AppException
-from rn_forge.commons.generation import Artifact
-from rn_forge.commons.lang.collections import MergeResult
+from rn_forge.commons.generation import Artifact, ArtifactKind
+from rn_forge.commons.lang.collections import DictUtils, MergeResult
 from rn_forge.commons.text.templates import TemplateEngine
 
 from rn_forge.agentkit.adapters import claude, codex, hooks
@@ -29,6 +29,7 @@ __all__ = [
     "render",
 ]
 
+_ABSENT = object()
 ASSETS = Path(str(files("rn_forge.agentkit").joinpath("assets")))
 ADAPTERS: dict[Agent, Adapter] = {
     Agent.CLAUDE: claude.ADAPTER,
@@ -58,7 +59,18 @@ def _destination(target: Target, spec: ArtifactSpec) -> str:
 
 def _emit(
     target: Target, spec: ArtifactSpec, context: Mapping[str, object]
-) -> Artifact:
+) -> Artifact | None:
+    if spec.kind is ArtifactKind.KEYS:
+        config = cast("Mapping[str, object]", context["config"])
+        values = {
+            path: value
+            for path in spec.keys
+            if (value := DictUtils.get(config, path, default=_ABSENT)) is not _ABSENT
+        }
+        if not values:
+            return None
+        return Artifact(_destination(target, spec), ArtifactKind.KEYS, "", keys=values)
+
     if spec.template:
         content = TemplateEngine.cached(directory=str(ASSETS)).render(
             spec.source, context
@@ -95,9 +107,10 @@ def render(
                 disabled,
             )
         artifacts.extend(
-            _emit(target, spec, context)
+            artifact
             for spec in _specs(target.scope, [agent])
             if spec.skill not in cast("list[str]", disabled)
+            if (artifact := _emit(target, spec, context)) is not None
         )
     if agents:
         common: dict[str, object] = {
@@ -106,7 +119,9 @@ def render(
             "config": {},
         }
         artifacts.extend(
-            _emit(target, spec, common) for spec in COMMON.get(target.scope, ())
+            artifact
+            for spec in COMMON.get(target.scope, ())
+            if (artifact := _emit(target, spec, common)) is not None
         )
     return artifacts
 

@@ -37,10 +37,12 @@ class ArtifactSpec:
         skill: The skill name, if this artifact installs a skill; the overlay's
             ``skills.disabled`` can then turn it off.
         base: What *path* is relative to.
+        keys: Dotted key paths the artifact owns, for ``ArtifactKind.KEYS``
+            only; values come from the agent's merged config.
 
     Raises:
-        ValueError: *path* is empty or leaves the scope root, *block* does not
-            match *kind*, or *executable* is set on a non-managed artifact.
+        ValueError: *path* is empty or leaves the scope root, *block* or *keys*
+            does not match *kind*, or *executable* is set on a non-managed artifact.
     """
 
     path: str
@@ -51,6 +53,7 @@ class ArtifactSpec:
     executable: bool = False
     skill: str | None = None
     base: Base = Base.ROOT
+    keys: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         """Reject a spec that cannot be rendered safely."""
@@ -63,6 +66,10 @@ class ArtifactSpec:
             raise ValueError(
                 f"artifact {self.path!r}: a block is required for, and only for, "
                 "kind 'block'"
+            )
+        if (self.kind is ArtifactKind.KEYS) != bool(self.keys):
+            raise ValueError(
+                f"artifact {self.path!r}: keys are required for, and only for, kind 'keys'"
             )
         if self.executable and self.kind is not ArtifactKind.MANAGED:
             raise ValueError(

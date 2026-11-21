@@ -114,10 +114,11 @@ def run_remove(target: Target) -> tuple[ApplyResult, list[Change]]:
 
 def run_diff(target: Target, agents: Sequence[Agent]) -> tuple[Plan, list[str]]:
     """Return the plan and the non-empty diffs of its write changes."""
-    planned, _, _ = build_plan(target, agents)
+    planned, entries, _ = build_plan(target, agents)
     diffs = [
         text
         for change in planned.changes
-        if change.action in WRITE_ACTIONS and (text := diff(target.root, change))
+        if change.action in WRITE_ACTIONS
+        and (text := diff(target.root, change, entries=entries))
     ]
     return planned, diffs
