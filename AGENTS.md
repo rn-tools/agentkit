@@ -62,3 +62,13 @@ changing anything structural.
   where the workflow asks — and never runs `task kiln:apply`.
 
 <!-- END rn-forge kiln -->
+
+<!-- BEGIN rn-forge agentkit -->
+
+## Agent workflow
+
+- Worktrees: create each one under `../agentkit-wt/`.
+- Shared checkout: commit by explicit path, never `git add -A`, and re-check
+  HEAD before committing.
+
+<!-- END rn-forge agentkit -->

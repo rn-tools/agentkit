@@ -36,3 +36,9 @@ coverage.xml
 # Docs build output ([docs] site_dir)
 .docs-site/
 # END rn-forge kiln
+
+# BEGIN rn-forge agentkit
+.rn-forge/agentkit/backups/
+.rn-forge/agentkit/.staging/
+.rn-forge/agentkit/state.lock
+# END rn-forge agentkit
