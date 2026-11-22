@@ -18,7 +18,7 @@ from rn_forge.agentkit.sources import Scope, SourceError
 from rn_forge.agentkit.targets import Target
 
 AGENTS_BLOCK = ManagedBlock("rn-forge agentkit", comment="<!--")
-CLAUDE_SEED = "@AGENTS.md\n"
+CLAUDE_BODY = "@AGENTS.md\n"
 GITIGNORE_BLOCK = ManagedBlock("rn-forge agentkit")
 GITIGNORE_BODY = (
     ".rn-forge/agentkit/backups/\n"
@@ -83,7 +83,7 @@ def render(target: Target, sources: MergeResult) -> list[Artifact]:
     """Render the repository-scope artifacts for *target*.
 
     At repository scope this is the optional AGENTS.md block, then a CLAUDE.md
-    seed that is written only when the file is absent, then a .gitignore block
+    block that imports @AGENTS.md, then a .gitignore block
     for the derived files.
 
     Raises:
@@ -97,7 +97,9 @@ def render(target: Target, sources: MergeResult) -> list[Artifact]:
     artifacts: list[Artifact] = []
     if body:
         artifacts.append(Artifact("AGENTS.md", ArtifactKind.BLOCK, body, AGENTS_BLOCK))
-    artifacts.append(Artifact("CLAUDE.md", ArtifactKind.SEEDED, CLAUDE_SEED))
+    artifacts.append(
+        Artifact("CLAUDE.md", ArtifactKind.BLOCK, CLAUDE_BODY, AGENTS_BLOCK)
+    )
     artifacts.append(
         Artifact(".gitignore", ArtifactKind.BLOCK, GITIGNORE_BODY, GITIGNORE_BLOCK)
     )
