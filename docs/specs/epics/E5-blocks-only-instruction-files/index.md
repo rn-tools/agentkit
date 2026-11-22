@@ -2,14 +2,15 @@
 
 |  |  |
 | -- | -- |
-| **State** | New |
+| **State** | Active |
+| **Start Date** | 2026-11-22 |
 
 <!-- BEGIN derived features -->
 
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
-| [F5.1 — agentkit writes and checks only its blocks](F5.1-blocks-only.md) | New | — | 2 New |
-| [F5.2 — `agentkit review`](F5.2-review-command.md) | New | — | 2 New |
+| [F5.1 — agentkit writes and checks only its blocks](F5.1-blocks-only.md) | Active | release-2 | 2 New |
+| [F5.2 — `agentkit review`](F5.2-review-command.md) | New | release-2 | 2 New |
 
 <!-- END derived features -->
 

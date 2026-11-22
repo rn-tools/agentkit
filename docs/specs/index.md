@@ -11,17 +11,12 @@ sections below are derived from the epic, feature and release pages by
 
 | Release | Status | Features |
 | -- | -- | -- |
+| [Release 2 — Blocks-only instruction files](../releases/release-2/index.md) | in progress | 1 Active · 1 New |
 | [Release 1 — agentkit v1](../releases/release-1/index.md) | shipped (2026-11-21) | 12 Closed |
 
 ## Backlog
 
-Features with no Iteration, by State and epic.
-
-### New
-
-| Epic | Features |
-| -- | -- |
-| [E5 — Blocks-only instruction files](epics/E5-blocks-only-instruction-files/index.md) | [F5.1](epics/E5-blocks-only-instruction-files/F5.1-blocks-only.md), [F5.2](epics/E5-blocks-only-instruction-files/F5.2-review-command.md) |
+Every feature is on a release or Removed.
 
 <!-- END derived board -->
 
