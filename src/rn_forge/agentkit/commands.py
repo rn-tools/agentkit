@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import shutil
 from collections.abc import Sequence
+from dataclasses import asdict
 from pathlib import Path
 
 from rn_forge.cli import DryRunOption, YesOption
@@ -20,6 +21,7 @@ from rn_forge.commons.runtime.console import OutputMode, console
 from rn_forge.tooling.install import rnf_home
 
 from rn_forge.agentkit import cutover, operations
+from rn_forge.agentkit import review as reviewing
 from rn_forge.agentkit.findings import scope_findings
 from rn_forge.agentkit.sources import Scope
 from rn_forge.agentkit.targets import Agent, Target, resolve_target
@@ -106,6 +108,23 @@ def plan(
     errors = sum(f.severity is Severity.ERROR for f in findings)
     if errors:
         raise AppException("{} error finding(s)", errors)
+
+
+def review(scope: Scope = Scope.MACHINE, repo: Path | None = None) -> None:
+    """Suggest improvements to the scope's instruction files; never writes."""
+    suggestions = reviewing.review(_target(scope, repo))
+    if console.mode is OutputMode.JSON:
+        console.emit([asdict(suggestion) for suggestion in suggestions])
+    elif not suggestions:
+        console.print("no suggestions", markup=False)
+    elif console.mode is not OutputMode.QUIET:
+        for suggestion in suggestions:
+            console.rich.print(
+                f"{suggestion.path}:{suggestion.line}: {suggestion.code} {suggestion.message}",
+                markup=False,
+                emoji=False,
+                soft_wrap=True,
+            )
 
 
 def remove(

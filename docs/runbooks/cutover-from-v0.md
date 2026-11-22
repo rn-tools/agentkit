@@ -188,11 +188,10 @@ the cause, before re-running step 6.
 ## 7. Trim body text the new blocks duplicate
 
 ```bash
-agentkit doctor
-agentkit plan
+agentkit review
 ```
 
-For each `agentkit.heading-duplicated` warning, find the named heading in
+For each `review.heading-duplicated` line, find the named heading in
 `~/.claude/CLAUDE.md` or `~/.codex/AGENTS.md`. Compare its two occurrences.
 Delete the duplicate section from the body, outside the
 `BEGIN rn-forge agentkit` and `END rn-forge agentkit` markers. Never edit inside
@@ -201,15 +200,14 @@ the markers.
 **Owner confirms** before running.
 
 ```bash
-read -r -p 'Path from the warning, relative to home: ' rel
+read -r -p 'Path from the line, relative to home: ' rel
 case "$rel" in
   .claude/CLAUDE.md|.codex/AGENTS.md) vi "$HOME/$rel" ;;
   *) exit 1 ;;
 esac
 ```
 
-Run `agentkit doctor` again. It must exit 0 with no `agentkit.*`
-instruction-file warnings.
+Run `agentkit review` again. It must print no `review.heading-duplicated` line.
 
 ## 8. Remove the dead leftovers
 

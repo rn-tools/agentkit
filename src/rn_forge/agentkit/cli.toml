@@ -16,6 +16,10 @@ name = "plan"
 target = "rn_forge.agentkit.commands:plan"
 
 [[cli.commands]]
+name = "review"
+target = "rn_forge.agentkit.commands:review"
+
+[[cli.commands]]
 name = "remove"
 target = "rn_forge.agentkit.commands:remove"
 
