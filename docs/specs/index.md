@@ -15,7 +15,13 @@ sections below are derived from the epic, feature and release pages by
 
 ## Backlog
 
-Every feature is on a release or Removed.
+Features with no Iteration, by State and epic.
+
+### New
+
+| Epic | Features |
+| -- | -- |
+| [E5 — Blocks-only instruction files](epics/E5-blocks-only-instruction-files/index.md) | [F5.1](epics/E5-blocks-only-instruction-files/F5.1-blocks-only.md), [F5.2](epics/E5-blocks-only-instruction-files/F5.2-review-command.md) |
 
 <!-- END derived board -->
 

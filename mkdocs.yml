@@ -98,7 +98,12 @@ nav:
               - F4.1 — Product and install: specs/epics/E4-lifecycle-and-cutover/F4.1-product-and-install.md
               - F4.2 — Machine cutover: specs/epics/E4-lifecycle-and-cutover/F4.2-machine-cutover.md
               - F4.3 — Repository rollout: specs/epics/E4-lifecycle-and-cutover/F4.3-repository-rollout.md
+          - E5 — Blocks-only instruction files:
+              - specs/epics/E5-blocks-only-instruction-files/index.md
+              - F5.1 — agentkit writes and checks only its blocks: specs/epics/E5-blocks-only-instruction-files/F5.1-blocks-only.md
+              - F5.2 — `agentkit review`: specs/epics/E5-blocks-only-instruction-files/F5.2-review-command.md
       - Ideas:
           - specs/ideas/index.md
+          - Per-repository native config: specs/ideas/per-repository-native-config.md
   - Decisions: adr/index.md
 # END derived nav

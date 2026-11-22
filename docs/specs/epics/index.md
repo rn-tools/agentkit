@@ -16,5 +16,6 @@ Jump to: [E1–E10](#e1e10)
 | [E2 — Instruction files](E2-instruction-files/index.md) | Closed | 3 Closed | release-1 |
 | [E3 — Asset pack](E3-asset-pack/index.md) | Closed | 2 Closed | release-1 |
 | [E4 — Lifecycle and cutover](E4-lifecycle-and-cutover/index.md) | Closed | 3 Closed | release-1 |
+| [E5 — Blocks-only instruction files](E5-blocks-only-instruction-files/index.md) | New | 2 New | — |
 
 <!-- END derived epics -->
