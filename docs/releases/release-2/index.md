@@ -22,7 +22,7 @@ that read it.
 | Feature | Epic | State |
 | -- | -- | -- |
 | [F5.1 — agentkit writes and checks only its blocks](../../specs/epics/E5-blocks-only-instruction-files/F5.1-blocks-only.md) | E5 | Closed |
-| [F5.2 — `agentkit review`](../../specs/epics/E5-blocks-only-instruction-files/F5.2-review-command.md) | E5 | Active |
+| [F5.2 — `agentkit review`](../../specs/epics/E5-blocks-only-instruction-files/F5.2-review-command.md) | E5 | Closed |
 
 <!-- END derived scope -->
 

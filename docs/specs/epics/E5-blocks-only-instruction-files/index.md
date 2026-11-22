@@ -10,7 +10,7 @@
 | Feature | State | Iteration | Stories |
 | -- | -- | -- | -- |
 | [F5.1 — agentkit writes and checks only its blocks](F5.1-blocks-only.md) | Closed | release-2 | 2 Closed |
-| [F5.2 — `agentkit review`](F5.2-review-command.md) | Active | release-2 | 1 New · 1 Closed |
+| [F5.2 — `agentkit review`](F5.2-review-command.md) | Closed | release-2 | 2 Closed |
 
 <!-- END derived features -->
 

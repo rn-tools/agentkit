@@ -1,5 +1,6 @@
 import json
 import subprocess
+from pathlib import Path
 
 import pytest
 from rn_forge.cli import ExitCode, run
@@ -70,6 +71,18 @@ def test_s5_2_1_claude_md_with_import_is_clean(home, repo):
 
 def test_s5_2_1_no_import_check_at_machine_scope(home):
     _write(home, ".claude/CLAUDE.md", _MISSING_IMPORT)
+    assert _suggestions(home) == []
+
+
+@pytest.mark.parametrize(
+    "filename", ["model-choice.md", "commit-policy.md", "validation-scope.md"]
+)
+def test_s5_2_2_contradictions_are_not_found(home, filename):
+    """Pin today's gap. Adding a model step would change this test."""
+    fixture = (
+        Path(__file__).parent / "fixtures" / "review" / "contradictions" / filename
+    )
+    _write(home, ".claude/CLAUDE.md", fixture.read_text(encoding="utf-8"))
     assert _suggestions(home) == []
 
 
