@@ -2,8 +2,9 @@
 
 |  |  |
 | -- | -- |
-| **State** | Active |
+| **State** | Closed |
 | **Start Date** | 2026-11-22 |
+| **Closed Date** | 2026-11-23 |
 
 <!-- BEGIN derived features -->
 
@@ -22,8 +23,13 @@ advisory command, `agentkit review`, takes over the checks that read the owner's
 text. kiln makes the matching change to its own block and seeds in its epic
 "Instruction files carry blocks only".
 
-## Open questions
+## Decisions
 
-- Is the order of kiln's and agentkit's blocks in a repository `AGENTS.md`
-  fixed? The proposal is kiln's block first, because it states the standard
-  agentkit's block builds on. Today the order is whichever tool applied first.
+- **Block order in a repository `AGENTS.md` is not fixed** (owner, 2026-11-23).
+  Each tool reads and checks only inside its own markers, so the order causes
+  no drift, and an existing block is updated in place, so applies never
+  reorder it. kiln's block comes first by construction: kiln writes
+  `AGENTS.md` when it generates a repository, and agentkit appends its block
+  afterwards. Enforcing an order would mean one tool moving the other's block,
+  which ADR-0002 rules out. A block that is removed and re-added goes to the
+  end, which is accepted.
