@@ -5,8 +5,8 @@
 ; The import boundary, in the half of it import-linter can enforce (see
 ; .rn-forge/kiln/standard.md, "The import boundary").
 ;
-; The rule that rn-forge-commons and rn-forge-tooling are the *only* rn-forge
-; packages a repo may depend on is NOT here, and cannot be: import-linter
+; The rule that a repo depends only on the rn-forge packages its archetype
+; allows is NOT here, and cannot be: import-linter
 ; rejects subpackages of external packages, so `rn_forge.kiln` is not a legal
 ; forbidden module however the contract is written. That rule is enforced where
 ; it is actually decidable — at the dependency declaration, by
@@ -37,4 +37,17 @@ forbidden_modules =
     django
     fastapi
 allow_indirect_imports = False
+
+; kiln's architecture baseline, ARCH-0001: imports point inward. Every layer is
+; optional, because a tier exists only once code needs it, so this holds on a
+; fresh repo and fails on the first import that points upward.
+[importlinter:contract:dependencies-point-inward]
+name = Imports in rn_forge.agentkit point inward (ARCH-0001)
+type = layers
+containers =
+    rn_forge.agentkit
+layers =
+    (main) : (commands) : (product) : (app) : (http)
+    (services) | (adapters)
+    (domain)
 # END rn-forge kiln

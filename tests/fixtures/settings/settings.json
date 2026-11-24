@@ -1,0 +1,15 @@
+{
+  "model": "example-model",
+  "availableModels": ["example-model", "example-alternative"],
+  "modelSettings": {"example-model": {"label": "Example"}},
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": false,
+  "remoteControlAtStartup": false,
+  "env": {"EXAMPLE_SETTING": "placeholder"},
+  "effortLevel": "low",
+  "permissions": {
+    "allow": ["Read(./example.txt)"],
+    "ask": ["Edit(./example.txt)"],
+    "deny": ["Read(./old-one)", "Read(./old-two)"]
+  }
+}

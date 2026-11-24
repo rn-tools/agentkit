@@ -8,6 +8,7 @@
 # `.gitignore` ignores — so tool caches, build output and virtualenvs are never
 # seen. `exclude` is for files git does list but this repo does not format.
 wrap = 80
+exclude = ["src/rn_forge/agentkit/assets/**", "tests/snapshots/**"]
 
 [plugin.tables]
 compact_tables = true

@@ -7,14 +7,14 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
-    "rn-forge-commons>=0.8.1,<0.9",
-    "rn-forge-cli>=0.1.2,<0.2",
-    "rn-forge-tooling>=0.3.1,<0.4",
+    "rn-forge-commons[templates]>=0.10.1,<0.11",
+    "rn-forge-cli>=0.2.1,<0.3",
+    "rn-forge-tooling>=0.4.0,<0.5",
 ]
 readme = "README.md"
 
 [project.scripts]
-agentkit = "rn_forge.agentkit.main:app"
+agentkit = "rn_forge.agentkit.main:main"
 
 [build-system]
 requires = ["uv_build>=0.13.7,<0.14.0"]

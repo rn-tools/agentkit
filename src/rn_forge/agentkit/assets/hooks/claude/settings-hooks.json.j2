@@ -1,0 +1,49 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/claude/hooks/user-prompt-secret-guard.sh",
+            "statusMessage": "Checking prompt"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/claude/hooks/pre-bash-guard.sh",
+            "statusMessage": "Checking command"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/claude/hooks/pre-write-protect.sh",
+            "statusMessage": "Checking protected path"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ share }}/claude/hooks/session-compact-context.sh",
+            "statusMessage": "Restoring compacted context"
+          }
+        ]
+      }
+    ]
+  }
+}

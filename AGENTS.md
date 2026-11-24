@@ -33,7 +33,8 @@ back in this repository.
 ## Repository standard (kiln)
 
 This repo is generated and checked by [kiln](https://github.com/rn-forge/kiln).
-The standard, rendered for this repo's archetype and docs profile, is
+What it is and how to set it up are in [README.md](README.md). The standard,
+rendered for this repo's archetype and docs profile, is
 [.rn-forge/kiln/standard.md](.rn-forge/kiln/standard.md). Read it before
 changing anything structural.
 
@@ -50,6 +51,9 @@ changing anything structural.
 - **Docs rules:** [docs/\_structure.md](docs/_structure.md) says what belongs
   where; [docs/index.md](docs/index.md) is the reader's entry point. Run
   `task docs:generate` after adding a page.
+- **Architecture:** product code follows
+  [kiln's architecture baseline](docs/adr/kiln/index.md). A departure from one
+  of its records is an ADR of this repo's own, never an edit there.
 - **Briefs:** a story ready to build gets a brief under its epic's `_briefs/`,
   deleted when the story closes
   ([docs/specs/\_structure.md](docs/specs/_structure.md#briefs)).
@@ -59,3 +63,13 @@ changing anything structural.
   where the workflow asks — and never runs `task kiln:apply`.
 
 <!-- END rn-forge kiln -->
+
+<!-- BEGIN rn-forge agentkit -->
+
+## Agent workflow
+
+- Worktrees: create each one under `../agentkit-wt/`.
+- Shared checkout: commit by explicit path, never `git add -A`, and re-check
+  HEAD before committing.
+
+<!-- END rn-forge agentkit -->

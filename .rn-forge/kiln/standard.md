@@ -32,7 +32,8 @@ The developer surface for this repo is exactly:
 | `task format` | Format Python code, TOML, YAML and Markdown prose in place. |
 | `task kiln:apply` | Re-render the generated files from .rn-forge/kiln/config.toml. Pass --dry-run, or --force \<path> to overwrite a drifted file, after `--`. |
 | `task kiln:diff` | Show every generated file that differs from a fresh render, writing nothing. Pass --artifact \<key or path> after `--` to limit it to one. |
-| `task kiln:pin` | Move kiln to another ref (tag, branch or SHA) and re-render with it. Pass the ref after `--`. |
+| `task kiln:pin` | Pin kiln to a branch's newest commit, a tag or a SHA and re-render with it. Pass it after `--`; with none, follow `track`. |
+| `task kiln:upgrade` | Pin kiln to a ref after `--` (or follow `track`), apply the new kiln's standard, move the rn-forge ranges to its pin table and run `task validate`. A failure restores the previous pin, files and locks unless FORCE=1. |
 | `task lint` | Every lint — Python, imports, Markdown, TOML and YAML formatting, kiln's checks (generated files, task layout, CI, dependencies, docs), workflow security, dependency vulnerabilities, dependency licences. |
 | `task setup` | Install the project and its dev + docs dependency groups. |
 | `task sonar:local` | Run the coverage tests and scan the checked-out branch on SonarCloud, awaiting the quality gate. Needs SONAR_TOKEN and sonar-scanner on PATH; pass --dry-run after -- to print the commands. |
@@ -88,19 +89,19 @@ Every path kiln writes or reads has exactly one of these kinds:
 - **Seeded** and **scaffolded** differ only in who writes them. A seeded file is
   an apply artifact, so a later `kiln apply` recreates it if it is absent and
   never touches it if present. A scaffolded file (`pyproject.toml`,
-  `README.md`, `CLAUDE.md`, the bodies of `AGENTS.md` and `mkdocs.yml`, the
-  first `src/` and `tests/`) is written by `kiln new` before its first apply,
-  and never again.
+  `README.md`, the body of `mkdocs.yml`, the first `src/` and `tests/`) is
+  written by `kiln new` before its first apply, and never again.
 - `.tmp/` is the repo's scratch root: disposable, gitignored, removed by
   `task clean`. Tests and tools write their output under it, and nothing kiln
   or the repo keeps lives there.
 - Paths kiln neither writes nor reads (`.claude/**`, `.codex/**`, installed
   skills) are not kiln's and have no kind.
 - The instruction files are **split by audience.** `README.md` is for people and
-  carries no agent directive. `AGENTS.md` is the agent instructions: its body
-  is repo-owned and kiln's block is in it, and a tool that adds its own block
-  does not own the file. `CLAUDE.md` is `@AGENTS.md` plus what only Claude
-  should read, and carries no block.
+  carries no agent directive. `AGENTS.md` and `CLAUDE.md` are owner files, and
+  kiln writes neither body. kiln adds one block to `AGENTS.md`, and the first
+  `kiln apply` creates the file holding that block alone. agentkit adds its
+  own blocks. No tool that adds a block owns the file, and kiln's checks read
+  only kiln's block.
 
 Managed here: `Taskfile.yml`, `tasks/*.yml`, `.editorconfig`,
 `.github/workflows/*.yml`, `.github/actions/setup`, `sonar-project.properties`
@@ -151,9 +152,9 @@ release:
 
 ```toml
 dependencies = [
-  "rn-forge-commons>=0.8.1,<0.9",
-  "rn-forge-cli>=0.1.2,<0.2",
-  "rn-forge-tooling>=0.3.1,<0.4",
+  "rn-forge-commons>=0.10.1,<0.11",
+  "rn-forge-cli>=0.2.1,<0.3",
+  "rn-forge-tooling>=0.4.0,<0.5",
 ]
 ```
 
@@ -177,6 +178,15 @@ To move the pin to another ref (a tag, a branch or a SHA, higher or lower), run
 `task kiln:pin -- <ref>`. It checks that the ref resolves, sets `[kiln] ref`,
 and re-renders with the kiln at that ref, so the move is one reviewable diff. Do
 not edit the ref by hand: `task kiln:apply` would then run the old kiln.
+
+A new kiln can raise the rn-forge floors, which `task kiln:pin` does not take,
+because `pyproject.toml` is this repository's own. Run
+`task kiln:upgrade -- <ref>` instead. The kiln at that ref pins itself, applies
+its standard, rewrites every rn-forge range to its pin table, prints the release
+notes in between, and runs `task setup` and `task validate`. It needs a clean
+working tree. A failure restores the previous pin, files and locks;
+`task kiln:upgrade FORCE=1 -- <ref>` keeps an applied upgrade so you can fix
+what `task validate` reports.
 
 ## 4. The import boundary
 
@@ -248,6 +258,14 @@ and keeps a key edited here as a repo override.
 or under `namespace` when one is set; the product supplies `artifacts()`,
 `checks()` and `migrate()` through `rn-forge-tooling`'s `ToolProduct` adapter.
 
+## 9. kiln's architecture baseline
+
+`docs/adr/kiln/` holds the design decisions kiln's canon makes for this repo's
+product code, one managed record per file, listed in its `index.md`. They are
+part of this standard: a change to product code follows them, and a departure
+from one is an ADR of this repo's own that names the record it supersedes.
+`.importlinter` enforces the records an import contract can express.
+
 ## CI checks
 
 Switch a configured check in `[ci.checks]`; see the CI architecture page for the
@@ -266,7 +284,7 @@ model.
 | Docs strict build | `task docs:build` | D: `[docs] profile = "mkdocs"` |
 | `dependency-review` | action | S |
 | Sonar | `sonar` job | C: `[ci] sonar`, default `true` |
-| Release | `release` job | C: `[ci] release`, default `tag-exists`; `pypi` for `python-lib`; `nx-dispatch` for `node-lib`; `none` |
+| Release | `release` job | C: `[ci] release`, default `tag-exists`; `pypi` for `python-lib`; `nx-dispatch` or `npm` for `node-lib`; `none` |
 | `verify-release` | `task ci:verify-release` | D: a release mode other than `none` |
 | Docs deploy | `docs` job | D: `[docs] profile = "mkdocs"` |
 | `ci-ok` | none | S |
@@ -278,3 +296,10 @@ model.
 A repository-owned workflow is allowed only for a scheduled or non-gating run;
 it keeps its own action pins current through Dependabot, which ignores the
 actions kiln pins.
+
+**Dependabot and releases.** Dependabot pull requests are not merged into a
+branch that publishes. A release absorbs the open Dependabot updates on its
+release branch before the cut, and the repository's release runbook says how.
+Security updates are the exception: they ignore `target-branch` and open against
+the default branch, so they ship as an urgent patch release, not held for the
+next cut.

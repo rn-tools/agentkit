@@ -1,0 +1,32 @@
+# Agentkit's packaged defaults for Claude, ported from v0.
+effortLevel = "medium"
+outputStyle = "concise"
+
+[permissions]
+deny = [
+    "Read(**/.env)",
+    "Read(**/.env.*)",
+    "Read(**/*.pem)",
+    "Read(**/*.key)",
+    "Read(**/*.p12)",
+    "Read(**/*.pfx)",
+    "Read(**/*.gpg)",
+    "Read(**/*.asc)",
+    "Read(**/id_rsa*)",
+    "Read(**/id_ed25519*)",
+    "Read(**/credentials)",
+    "Read(**/credentials.json)",
+    "Read(**/service-account*.json)",
+    "Read(**/.netrc)",
+    "Read(**/.npmrc)",
+    "Read(**/.pypirc)",
+    "Read(**/.kube/config)",
+    "Read(**/.ssh/**)",
+    "Read(**/.aws/**)",
+    "Read(**/*.tfstate)",
+    "Read(**/*.tfvars)",
+]
+
+[extraKnownMarketplaces.claude-plugins-official.source]
+source = "github"
+repo = "anthropics/claude-plugins-official"

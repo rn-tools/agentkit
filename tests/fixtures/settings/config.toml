@@ -1,0 +1,24 @@
+# Example model selection
+model = "example-model"
+notify = ["example-notifier"]
+model_reasoning_effort = "high"
+personality = "friendly"
+
+[mcp_servers.example]
+command = "example-server"
+
+[plugins.example]
+enabled = true
+
+[marketplaces.example]
+source = "placeholder"
+
+# Example project permissions
+[projects."/placeholder/repo"]
+trust_level = "trusted"
+
+[desktop]
+theme = "example"
+
+[hooks.state]
+example = "placeholder"
