@@ -35,8 +35,7 @@ lifecycle = true
 [kiln]
 # A kiln release tag, `v<version>`; a branch only before kiln's first
 # release. `kiln apply` pins the dev dependency and the CI install to it.
-ref = "e593a65da3805e75fc0c2c5d422f11154d7282ac"
-track = "feature/v1"
+ref = "523016f5bd4420e69db66f176e25aac49cac0fd3"
 
 # The command line this repository exposes, read by rn-forge-cli's
 # `CliApp.from_config` and carried as written. `kiln apply` does not read it.

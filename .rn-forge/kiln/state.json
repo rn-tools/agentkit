@@ -106,7 +106,7 @@
     },
     ".rn-forge/kiln/standard.md": {
       "begin_marker": null,
-      "content_hash": "576777ea53c9a01dd633d2925bb7fa6310c44ea1f22308563add58c192084442",
+      "content_hash": "3c3f01aa0bc7c67d2cd15fae84d3df9ae6b1e2d9d458262f5e898995917769ca",
       "end_marker": null,
       "key_paths": null,
       "kind": "managed",
@@ -130,7 +130,7 @@
     },
     "AGENTS.md#rn-forge kiln": {
       "begin_marker": "<!-- BEGIN rn-forge kiln -->",
-      "content_hash": "833954c224cc919f0648543b6de1a67291a80276d744e2d1e52a8e7e1762cff5",
+      "content_hash": "addc75dd4aa7a8122722911d533e5b181ea0ae331a50778e988a728a7d27dd6e",
       "end_marker": "<!-- END rn-forge kiln -->",
       "key_paths": null,
       "kind": "block",
@@ -138,7 +138,7 @@
     },
     "Taskfile.yml": {
       "begin_marker": null,
-      "content_hash": "e8e6a9e6daa8c612dba7d8f9ac0dceb5a0db89d416418196aeb1053bf7bae55a",
+      "content_hash": "f462237fc73b32be13a9fbe2f87ca49cdbfbf5db8642ccc215bcb96e2b614f60",
       "end_marker": null,
       "key_paths": null,
       "kind": "managed",
@@ -162,7 +162,7 @@
     },
     "docs/_structure.md": {
       "begin_marker": null,
-      "content_hash": "263b6f301afd3f9780f24b85d86324bf3d34ac0bd1915b57b77dab6eb0448e31",
+      "content_hash": "ca8a1f598463d6d2c4194c7c1526c14d6cb0866334a20ea415270652bd5e1b46",
       "end_marker": null,
       "key_paths": null,
       "kind": "managed",
@@ -282,7 +282,7 @@
     },
     "docs/releases/_structure.md": {
       "begin_marker": null,
-      "content_hash": "2daa5bdcf0379a0b34f63e56925961a09d8626cf426f83b52c07bc6356b91722",
+      "content_hash": "883d3cebabadfb99c31b325c027bdfaf71a07c51e3e8a7a3a7081dd719ee320a",
       "end_marker": null,
       "key_paths": null,
       "kind": "managed",
@@ -434,7 +434,7 @@
     }
   },
   "metadata": {
-    "config_hash": "fb969be9e21ec8020af7776f2e211860aa452c43b11173d42ad3f6b99dee2ee3",
+    "config_hash": "8af778a0f57f6bdcb6893f18f3e8dddacb276e689e0dc74da42f780ed957508b",
     "config_provenance": {
       "archetype.python-tool.module": {
         "layer": "flags",
@@ -523,7 +523,7 @@
       },
       "kiln.ref": {
         "layer": "repo",
-        "value": "e593a65da3805e75fc0c2c5d422f11154d7282ac"
+        "value": "523016f5bd4420e69db66f176e25aac49cac0fd3"
       },
       "lifecycle.product": {
         "layer": "flags",
