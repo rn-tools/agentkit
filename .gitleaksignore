@@ -1,0 +1,2 @@
+# Synthetic GitHub token in the gitleaks-detection hook test (S3.1.1).
+8056c437c5c3c64b860b6917b906e0e601204387:tests/hooks/test_guard_scripts.py:github-pat:316

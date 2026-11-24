@@ -1,3 +1,4 @@
+import re
 from importlib.metadata import version
 
 from rn_forge.cli import ExitCode, run
@@ -13,7 +14,7 @@ def test_version_flag_prints_the_package_version(monkeypatch, capsys):
 
 def test_the_declared_app_exposes_the_declared_commands(capsys):
     assert run(app, ["apply", "--help"]) == ExitCode.OK
-    assert "--scope" in capsys.readouterr().out
+    assert "--scope" in re.sub(r"\x1b\[[0-9;]*m", "", capsys.readouterr().out)
     assert run(app, ["diff", "--help"]) == ExitCode.OK
 
 
