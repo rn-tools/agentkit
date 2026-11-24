@@ -2,8 +2,9 @@
 
 |  |  |
 | -- | -- |
-| **Status** | in progress |
+| **Status** | shipped |
 | **Start Date** | 2026-11-22 |
+| **Finish Date** | 2026-11-24 |
 
 agentkit writes and checks only its own blocks in instruction files: a
 repository `CLAUDE.md` gets the `@AGENTS.md` import as a block, `doctor` stops
@@ -35,3 +36,4 @@ that read it.
 
 | Deliverable | Version | Tag | Commit | Verification |
 | -- | -- | -- | -- | -- |
+| agentkit | — | — | `b1aa503` | `task validate` green (229 passed) on kiln `523016f`, 2026-11-24; no Dependabot PRs (no remote PRs yet) |

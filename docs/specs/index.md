@@ -11,7 +11,7 @@ sections below are derived from the epic, feature and release pages by
 
 | Release | Status | Features |
 | -- | -- | -- |
-| [Release 2 — Blocks-only instruction files](../releases/release-2/index.md) | in progress | 2 Closed |
+| [Release 2 — Blocks-only instruction files](../releases/release-2/index.md) | shipped (2026-11-24) | 2 Closed |
 | [Release 1 — agentkit v1](../releases/release-1/index.md) | shipped (2026-11-21) | 12 Closed |
 
 ## Backlog
